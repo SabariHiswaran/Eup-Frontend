@@ -3,12 +3,13 @@ import React from 'react'
 import { Nav } from 'react-bootstrap';
 
 import '../Components/TeacherNavBar.css'
+import { Link } from 'react-router-dom';
 
 const TeacherNavBar = () => {
   return (
     <Nav className="justify-content-center" activeKey="/home">
         <Nav.Item>
-          <Nav.Link href="/home">Home</Nav.Link>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="link-1">Courses</Nav.Link>

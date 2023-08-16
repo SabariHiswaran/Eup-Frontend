@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
 import TeacherNavBar from './TeacherNavBar';
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 
 const Header = () => {
@@ -30,6 +31,8 @@ const Header = () => {
             </Container>
 
             {navStatus && <TeacherNavBar />}
+
+            <Outlet/>
 
         </>
     )
