@@ -1,4 +1,5 @@
 import React from 'react'
+import './Header.css'
 import { Container } from 'react-bootstrap';
 import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
 import TeacherNavBar from './TeacherNavBar';
@@ -25,7 +26,9 @@ const Header = () => {
             <Container className=" d-flex justify-content-center">
 
                 <span onClick={handleDropDownClick} className='nav-dropDown'>
+
                     {navStatus ? <IoIosArrowDropdownCircle /> : <IoIosArrowDropupCircle />}
+
                 </span>
 
             </Container>

@@ -1,0 +1,8 @@
+.course-topic{
+    text-decoration: none;
+}
+
+.course-topic:hover{
+    color: white !important;
+    background-color: black !important;
+}
