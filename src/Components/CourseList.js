@@ -18,7 +18,7 @@ const CourseList = () => {
 
     const result = await courseData.json()
 
-    setCourses(result.courselist)
+    setCourses(result.courses.courseLists)
 
   }
   

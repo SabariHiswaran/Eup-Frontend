@@ -21,7 +21,7 @@ const CourseSubTopicList = () => {
 
     const result = await subTopicsData.json()
 
-    setSubTopics(result.courselist)
+    setSubTopics(result.courses.courseLists)
 
   }
 
@@ -31,7 +31,7 @@ const CourseSubTopicList = () => {
       <h4 className='mx-4 px-5 mt-4'> {courseTopic} : </h4>
 
       
-    <p className='mx-4 px-5'> Kindly choose any sub topic that you would like to teach.</p>
+    <p className='mx-4 px-5'> Kindly choose the sub topic and schedule the meeting.</p>
 
       <CourseSubTopic topics={subTopics} courseTopic={courseTopic}/>
 
