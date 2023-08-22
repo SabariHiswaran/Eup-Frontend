@@ -10,7 +10,7 @@ const CourseList = () => {
 
       fetchCourses()
 
-  },[])
+  },[courses])
 
   const fetchCourses = async () => {
 
@@ -22,9 +22,15 @@ const CourseList = () => {
 
   }
 
-  return (
+  return ( 
 
-    <Container className='d-flex flex-wrap justify-content-between align-items-center py-5 px-5'>
+    <Container>
+
+    <h4 className='mx-4 px-5 mt-4'> Course List :  </h4>
+
+    <p className='mx-4 px-5'> You can choose any course topic that you would like to teach.</p>
+
+    <Container className='d-flex flex-wrap justify-content-between align-items-center py-3 px-5'>
 
       {courses.map((course,index) => {
 
@@ -33,6 +39,8 @@ const CourseList = () => {
         )
       })}
      
+    </Container>
+
     </Container>
 
   )

@@ -5,6 +5,7 @@ import Header from './Components/Header';
 import Homepage from './Components/Homepage';
 import ErrorPage from './Components/ErrorPage';
 import CourseList from './Components/CourseList';
+import CourseSubTopic from './Components/CourseSubTopic';
 
 
 const appRouter = createBrowserRouter([
@@ -26,7 +27,13 @@ const appRouter = createBrowserRouter([
         path: "/api/teacher/courses",
         element : <CourseList/>
   
-        }
+        },
+        {
+  
+          path: "/api/teacher/courses/:courseTopic",
+          element : <CourseSubTopic/>
+    
+          }
     ],
     errorElement:<ErrorPage/>
 
