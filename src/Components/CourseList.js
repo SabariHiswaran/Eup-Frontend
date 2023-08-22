@@ -10,7 +10,7 @@ const CourseList = () => {
 
       fetchCourses()
 
-  },[courses])
+  },[])
 
   const fetchCourses = async () => {
 
@@ -21,7 +21,7 @@ const CourseList = () => {
     setCourses(result.courselist)
 
   }
-
+  
   return ( 
 
     <Container>

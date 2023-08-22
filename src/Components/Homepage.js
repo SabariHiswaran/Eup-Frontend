@@ -1,8 +1,11 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 
 const Homepage = () => {
   return (
-    <div>Homepage</div>
+    <Container>
+      <h4>Homepage</h4>
+    </Container>
   )
 }
 

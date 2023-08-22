@@ -1,16 +1,29 @@
 import React from 'react'
-import { Container } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import {  Container } from 'react-bootstrap'
+import SubTopicsCards from './SubTopicsCards'
 
-const CourseSubTopic = () => {
+const CourseSubTopic = ({topics,courseTopic}) => {
 
- const {courseTopic} = useParams()
+  const filteredTopics = topics
+                         .filter(topic => Object.keys(topic).toString() === courseTopic)
+                         .map(topic => Object.values(topic[courseTopic]))
 
+  const topicsList = filteredTopics.flat(1)
 
   return (
-    <Container>
-       <h4> {courseTopic} </h4>
+
+    <Container className='d-flex flex-wrap justify-content-between align-items-center py-3 px-5'>
+
+{topicsList.map((topic,index) => {
+
+return(
+ <SubTopicsCards topic = {topic} key={index} />
+)
+})}
+
+
     </Container>
+
   )
 }
 
