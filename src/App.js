@@ -6,6 +6,7 @@ import Homepage from './Components/Homepage';
 import ErrorPage from './Components/ErrorPage';
 import CourseList from './Components/CourseList';
 import CourseSubTopicList from './Components/CourseSubTopicList';
+import TeacherMeetingForm from './Components/TeacherMeetingForm';
 
 
 const appRouter = createBrowserRouter([
@@ -24,16 +25,22 @@ const appRouter = createBrowserRouter([
       },
       {
 
-        path: "/api/teacher/courses",
-        element : <CourseList/>
+      path: "/api/teacher/courses",
+      element : <CourseList/>
   
-        },
-        {
+      },
+      {
   
-          path: "/api/teacher/courses/:courseTopic",
-          element : <CourseSubTopicList/>
+      path: "/api/teacher/courses/:courseTopic",
+      element : <CourseSubTopicList/>
     
-          }
+      },
+      {
+  
+      path: "/api/teacher/courses/:courseTopic/:topic",
+      element : <TeacherMeetingForm/>
+    
+      }
     ],
     errorElement:<ErrorPage/>
 

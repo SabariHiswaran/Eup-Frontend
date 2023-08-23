@@ -17,7 +17,7 @@ const CourseSubTopic = ({topics,courseTopic}) => {
 {topicsList.map((topic,index) => {
 
 return(
- <SubTopicsCards topic = {topic} key={index} />
+ <SubTopicsCards topic = {topic} courseTopic={courseTopic} key={index} />
 )
 })}
 
