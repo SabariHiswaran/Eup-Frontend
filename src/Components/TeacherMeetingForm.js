@@ -3,29 +3,44 @@ import { Button, Col, Container, Row } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from "yup"
-import moment from "moment"
+import moment from 'moment/moment'
 import './TeacherMeetingForm.css'
 
 const TeacherMeetingForm = () => {
 
   const { courseTopic, topic } = useParams()
 
-  const currentDate = new Date()
-  const currentTime = currentDate.getTime()
+  // const currentTime = new Date().toLocaleString().split(',')[1]
+
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  let mm = today.getMonth() + 1; // Months start at 0!
+  let dd = today.getDate();
+  let minutes = today.getMinutes();
+  let hour = today.getHours();
+
+  if (dd < 10) dd = '0' + dd;
+  if (mm < 10) mm = '0' + mm;
+
+  if (hour < 10) hour = '0' + hour
+
+  const currentDate = yyyy + '-' + mm + '-' + dd;
+
+  const currentTime = hour + ':' + minutes
 
   const formik = useFormik({
     initialValues: {
       courseTopic: courseTopic,
       topic: topic,
-      membersLimit: 0,
+      membersLimit: "",   //convert to number
       startDate: currentDate,
       endDate: currentDate,
       startTime: currentTime,
       endTime: currentTime,
-      totalDays: 0,
+      totalDays: "",        //convert to number
       name: "",
       designation: "",
-      experience: 0,
+      experience: "",         //convert to number
       knowledgeRequired: ""
     },
     validationSchema: Yup.object({
@@ -38,7 +53,7 @@ const TeacherMeetingForm = () => {
       endTime: Yup
         .string()
         .required("Meeting End time is required")
-        .test("is-greater", "Meeting End time should be greater", function (value) {
+        .test("is-greater", "Meeting End time should be greater than start Time", function(value) {
           const { startTime } = this.parent;
           return moment(value, "HH:mm").isSameOrAfter(moment(startTime, "HH:mm"));
         }),
@@ -50,7 +65,7 @@ const TeacherMeetingForm = () => {
 
     }),
     onSubmit: (values) => {
-      console.log(values)
+      console.log(typeof(values.membersLimit))
     }
   })
 
@@ -77,7 +92,7 @@ const TeacherMeetingForm = () => {
                 disabled={true}
                 name='courseTopic'
               />
-               {formik.touched.courseTopic && formik.errors.courseTopic ? <p className="error-text"> {formik.errors.courseTopic}</p> : null }
+              {formik.touched.courseTopic && formik.errors.courseTopic ? <p className="error-text"> {formik.errors.courseTopic}</p> : null}
 
 
               <p className='label-margin'> Selected Sub Topic </p>
@@ -87,7 +102,7 @@ const TeacherMeetingForm = () => {
                 disabled={true}
                 name='topic'
               />
-              {formik.touched.topic && formik.errors.topic ? <p className="error-text"> {formik.errors.topic}</p> : null }
+              {formik.touched.topic && formik.errors.topic ? <p className="error-text"> {formik.errors.topic}</p> : null}
 
 
               <p className='label-margin'> Meeting Start Date </p>
@@ -96,9 +111,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.startDate}
                 name='startDate'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-              {formik.touched.startDate && formik.errors.startDate ? <p className="error-text"> {formik.errors.startDate}</p> : null }
+              {formik.touched.startDate && formik.errors.startDate ? <p className="error-text"> {formik.errors.startDate}</p> : null}
 
 
               <p className='label-margin'> Meeting End Date </p>
@@ -107,9 +122,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.endDate}
                 name='endDate'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.endDate && formik.errors.endDate ? <p className="error-text"> {formik.errors.endDate}</p> : null }
+              {formik.touched.endDate && formik.errors.endDate ? <p className="error-text"> {formik.errors.endDate}</p> : null}
 
             </Container>
           </Col>
@@ -124,9 +139,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.startTime}
                 name='startTime'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.startTime && formik.errors.startTime ? <p className="error-text"> {formik.errors.startTime}</p> : null }
+              {formik.touched.startTime && formik.errors.startTime ? <p className="error-text"> {formik.errors.startTime}</p> : null}
 
               <p className='label-margin'> Meeting End Time </p>
               <input
@@ -134,9 +149,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.endTime}
                 name='endTime'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.endTime && formik.errors.endTime ? <p className="error-text"> {formik.errors.endTime}</p> : null }
+              {formik.touched.endTime && formik.errors.endTime ? <p className="error-text"> {formik.errors.endTime}</p> : null}
 
               <p className='label-margin'>  Total No.of.Days </p>
               <input
@@ -144,9 +159,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.totalDays}
                 name='totalDays'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.totalDays && formik.errors.totalDays ? <p className="error-text"> {formik.errors.totalDays}</p> : null }
+              {formik.touched.totalDays && formik.errors.totalDays ? <p className="error-text"> {formik.errors.totalDays}</p> : null}
 
               <p className='label-margin'> Participants Limit </p>
               <input
@@ -154,9 +169,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.membersLimit}
                 name='membersLimit'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.membersLimit && formik.errors.membersLimit ? <p className="error-text"> {formik.errors.membersLimit}</p> : null }
+              {formik.touched.membersLimit && formik.errors.membersLimit ? <p className="error-text"> {formik.errors.membersLimit}</p> : null}
 
 
             </Container>
@@ -173,9 +188,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.name}
                 name='name'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.name && formik.errors.name ? <p className="error-text"> {formik.errors.name}</p> : null }
+              {formik.touched.name && formik.errors.name ? <p className="error-text"> {formik.errors.name}</p> : null}
 
               <p className='label-margin'> Designation</p>
               <input
@@ -183,9 +198,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.designation}
                 name='designation'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.designation && formik.errors.designation ? <p className="error-text"> {formik.errors.designation}</p> : null }
+              {formik.touched.designation && formik.errors.designation ? <p className="error-text"> {formik.errors.designation}</p> : null}
 
               <p className='label-margin'>  Years of Experience </p>
               <input
@@ -193,9 +208,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.experience}
                 name='experience'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.experience && formik.errors.experience ? <p className="error-text"> {formik.errors.experience}</p> : null }
+              {formik.touched.experience && formik.errors.experience ? <p className="error-text"> {formik.errors.experience}</p> : null}
 
               <p className='label-margin'> Pre-requisites required </p>
 
@@ -205,9 +220,9 @@ const TeacherMeetingForm = () => {
                 value={formik.values.knowledgeRequired}
                 name='knowledgeRequired'
                 onChange={formik.handleChange}
-                onBlur={formik.onBlur}
+                onBlur={formik.handleBlur}
               />
-               {formik.touched.knowledgeRequired && formik.errors.knowledgeRequired ? <p className="error-text"> {formik.errors.knowledgeRequired}</p> : null }
+              {formik.touched.knowledgeRequired && formik.errors.knowledgeRequired ? <p className="error-text"> {formik.errors.knowledgeRequired}</p> : null}
 
             </Container>
 
@@ -221,11 +236,11 @@ const TeacherMeetingForm = () => {
       <Container>
         <Row>
           <Col lg={5} md={5} sm={0} > </Col>
-          <Col lg={1} md={1} sm={12} className=' py-3 px-5' >
-            <Button variant='secondary' onClick={formik.handleSubmit} > Schedule </Button>
-          </Col>
+            
+         
 
-          <Col lg={2} md={2} sm={12} className=' py-3 px-5'>
+          <Col lg={3} md={3} sm={12} className=' py-3 px-5'>
+            <Button variant='secondary' onClick={formik.handleSubmit} className='mx-2'> Schedule </Button>
             <Button variant='secondary'>  Go Back </Button>
           </Col>
           <Col lg={5} md={5} sm={0} > </Col>
