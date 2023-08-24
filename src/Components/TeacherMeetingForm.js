@@ -5,12 +5,14 @@ import { useFormik } from 'formik'
 import * as Yup from "yup"
 import moment from 'moment/moment'
 import './TeacherMeetingForm.css'
+import Prompt from './Prompt'
+import { useNavigate } from 'react-router-dom'
 
 const TeacherMeetingForm = () => {
 
   const { courseTopic, topic } = useParams()
 
-  // const currentTime = new Date().toLocaleString().split(',')[1]
+  const navigate = useNavigate()
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -23,6 +25,7 @@ const TeacherMeetingForm = () => {
   if (mm < 10) mm = '0' + mm;
 
   if (hour < 10) hour = '0' + hour
+  if (minutes < 10) minutes = '0' + minutes
 
   const currentDate = yyyy + '-' + mm + '-' + dd;
 
@@ -65,11 +68,15 @@ const TeacherMeetingForm = () => {
 
     }),
     onSubmit: (values) => {
-      console.log(typeof(values.membersLimit))
+      console.log(values)
     }
   })
 
   return (
+    <>
+
+    <Prompt when={!!formik.dirty} message="You may lose your unsaved data, Are you sure you want to leave this page?" />
+
     <Container>
       <h4 className='mx-4 px-5 mt-4'> Schedule the Meeting : </h4>
 
@@ -241,7 +248,7 @@ const TeacherMeetingForm = () => {
 
           <Col lg={3} md={3} sm={12} className=' py-3 px-5'>
             <Button variant='secondary' onClick={formik.handleSubmit} className='mx-2'> Schedule </Button>
-            <Button variant='secondary'>  Go Back </Button>
+            <Button variant='secondary' onClick={() => navigate(-1)}>  Go Back </Button>
           </Col>
           <Col lg={5} md={5} sm={0} > </Col>
         </Row>
@@ -249,6 +256,7 @@ const TeacherMeetingForm = () => {
       </Container>
 
     </Container>
+    </>
   )
 }
 
