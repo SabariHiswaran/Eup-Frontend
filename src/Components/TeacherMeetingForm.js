@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from "yup"
 import moment from 'moment/moment'
@@ -13,6 +13,10 @@ const TeacherMeetingForm = () => {
   const { courseTopic, topic } = useParams()
 
   const navigate = useNavigate()
+
+  const [isSubmitting,setIsSubmitting] = useState(false)
+
+  const [displayForm,setDisplayForm] = useState(true)
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -67,8 +71,26 @@ const TeacherMeetingForm = () => {
       knowledgeRequired: Yup.string().required("Pre-requistees skill is required")
 
     }),
-    onSubmit: (values) => {
-      console.log(values)
+    onSubmit:async (values,{resetForm}) => {
+
+      setDisplayForm(false)
+
+      setIsSubmitting(true)
+
+      const createMeeting =await  fetch("http://localhost:5000/api/teacher/courses/createMeeting", {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body : JSON.stringify(values)
+        })
+      
+      const responseFromServer = await createMeeting.json()
+
+      resetForm()
+
+      setIsSubmitting(false)
+
+      console.log(responseFromServer)
+      
     }
   })
 
@@ -82,7 +104,9 @@ const TeacherMeetingForm = () => {
 
 
       <p className='mx-4 px-5'> Fill the meeting details in below form and schedule the meeting.</p>
-
+    
+      {displayForm &&
+      <>
       <Container>
 
         <Row>
@@ -247,15 +271,56 @@ const TeacherMeetingForm = () => {
          
 
           <Col lg={3} md={3} sm={12} className=' py-3 px-5'>
-            <Button variant='secondary' onClick={formik.handleSubmit} className='mx-2'> Schedule </Button>
-            <Button variant='secondary' onClick={() => navigate(-1)}>  Go Back </Button>
+
+            <Button 
+            variant='secondary' 
+            onClick={formik.handleSubmit} 
+            className='mx-2'
+            > 
+            Schedule 
+            </Button>
+
+            <Button 
+            variant='secondary'
+            onClick={() => navigate(-1)}
+            >  
+            Go Back 
+            </Button>
+
           </Col>
+
           <Col lg={5} md={5} sm={0} > </Col>
+
         </Row>
 
       </Container>
+      </>
+      }
+    </Container>
+
+    {isSubmitting ? 
+    
+    !displayForm &&
+      
+    <Container>
+
+        <h4> Please wait while Meeting Details are being saved....</h4>
 
     </Container>
+    
+    : 
+
+    !displayForm &&
+
+    <Container>
+
+        <h4> Your meeting details has been successfully posted. </h4>
+
+        <Button variant='danger'> View Upcoming Meetings </Button>
+
+    </Container>
+  
+    }
     </>
   )
 }
