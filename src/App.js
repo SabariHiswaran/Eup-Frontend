@@ -7,6 +7,7 @@ import ErrorPage from './Components/ErrorPage';
 import CourseList from './Components/CourseList';
 import CourseSubTopicList from './Components/CourseSubTopicList';
 import TeacherMeetingForm from './Components/TeacherMeetingForm';
+import MeetingsList from './Components/MeetingsList';
 
 
 const appRouter = createBrowserRouter([
@@ -40,6 +41,10 @@ const appRouter = createBrowserRouter([
       path: "/api/teacher/courses/:courseTopic/:topic",
       element : <TeacherMeetingForm/>
     
+      },
+      {
+        path : "/api/teacher/courses/upcomingMeetings",
+        element : <MeetingsList/>
       }
     ],
     errorElement:<ErrorPage/>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
-import {  useParams } from 'react-router-dom'
+import {  Link, useParams } from 'react-router-dom'
 import { useFormik } from 'formik'
 import * as Yup from "yup"
 import moment from 'moment/moment'
@@ -306,7 +306,7 @@ const TeacherMeetingForm = () => {
     <Container className='d-flex flex-column justify-content-center align-items-center p-5'>
 
         <h3> Please wait while Meeting Details are being saved....</h3>
-
+        {/* react loading spinner */}
         <ColorRing
         visible={true}
         height="80"
@@ -327,7 +327,14 @@ const TeacherMeetingForm = () => {
 
         <h3> Your meeting details has been successfully posted. </h3>
 
-        <Button variant='danger' className='my-3'> View Upcoming Meetings </Button>
+        <Button 
+        variant='danger' 
+        className='my-3'
+        as={Link}
+        to="/api/teacher/courses/upcomingMeetings"
+        > 
+        View Upcoming Meetings 
+        </Button>
 
     </Container>
   

@@ -18,7 +18,7 @@ const TeacherNavBar = () => {
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link eventKey="link-2">Meetings</Nav.Link>
+          <Nav.Link as={Link} to="/api/teacher/courses/upcomingMeetings">Meetings</Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
