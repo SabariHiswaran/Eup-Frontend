@@ -7,6 +7,7 @@ import moment from 'moment/moment'
 import './TeacherMeetingForm.css'
 import Prompt from './Prompt'
 import { useNavigate } from 'react-router-dom'
+import { ColorRing } from 'react-loader-spinner'
 
 const TeacherMeetingForm = () => {
 
@@ -302,9 +303,19 @@ const TeacherMeetingForm = () => {
     
     !displayForm &&
       
-    <Container>
+    <Container className='d-flex flex-column justify-content-center align-items-center p-5'>
 
-        <h4> Please wait while Meeting Details are being saved....</h4>
+        <h3> Please wait while Meeting Details are being saved....</h3>
+
+        <ColorRing
+        visible={true}
+        height="80"
+        width="80"
+        ariaLabel="blocks-loading"
+        wrapperStyle={{}}
+        wrapperClass="blocks-wrapper"
+        colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+      />
 
     </Container>
     
@@ -312,11 +323,11 @@ const TeacherMeetingForm = () => {
 
     !displayForm &&
 
-    <Container>
+    <Container className='d-flex flex-column justify-content-center align-items-center p-5'>
 
-        <h4> Your meeting details has been successfully posted. </h4>
+        <h3> Your meeting details has been successfully posted. </h3>
 
-        <Button variant='danger'> View Upcoming Meetings </Button>
+        <Button variant='danger' className='my-3'> View Upcoming Meetings </Button>
 
     </Container>
   
