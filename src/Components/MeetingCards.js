@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
+import './MeetingCards.css'
 
 const MeetingCards = ({meeting}) => {
 
@@ -30,10 +31,10 @@ const MeetingCards = ({meeting}) => {
                 <Col lg={4} md={4} sm={12}>
                     
                     <h5> {topic}  ({courseTopic})  </h5>
-                    <p className='m-0'> Date - {startDate.split("T")[0]} to {endDate.split("T")[0]} </p>
-                    <p className='m-0'>Time - {startTime} - {endTime} </p>
-                    <p className='m-0'> Participants Limit - {membersLimit} </p>
-                    <p className='m-0'> Pre-requistees required - {knowledgeRequired} </p>
+                    <p className='m-0'> <span className="meetingDetailsHeading"> Date </span>- {startDate.split("T")[0]} to {endDate.split("T")[0]} </p>
+                    <p className='m-0'> <span className="meetingDetailsHeading">Time</span> - {startTime} - {endTime} </p>
+                    <p className='m-0'> <span className="meetingDetailsHeading">Participants Limit </span>- {membersLimit} </p>
+                    <p className='m-0'> <span className="meetingDetailsHeading">Pre-requistees required </span>- {knowledgeRequired} </p>
                     <p className='m-0'> {name} | {designation} | {experience} years  </p>
                     
                 </Col>
