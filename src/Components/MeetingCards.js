@@ -20,6 +20,15 @@ const MeetingCards = ({meeting}) => {
     knowledgeRequired
   }  = meeting
 
+  const handleDelete =async (meetingId) => {
+
+       const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`)
+
+       const response = deleteRequest.json()
+
+       alert(response)
+
+  }
 
   return (
     <Container className='p-3 border-bottom border-dark my-2 '>
@@ -43,7 +52,9 @@ const MeetingCards = ({meeting}) => {
                     
                     <Button variant="danger"> Edit </Button>
 
-                    <Button variant="danger"> Delete </Button>
+                    <Button 
+                    variant="danger" 
+                    onClick={() =>handleDelete(id)}> Delete </Button>
                 </Col>
 
                 <Col lg={2} md={2} sm={0}> </Col>
