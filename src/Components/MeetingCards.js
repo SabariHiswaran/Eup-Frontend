@@ -20,11 +20,13 @@ const MeetingCards = ({meeting}) => {
     knowledgeRequired
   }  = meeting
 
+  console.log(meeting)
+
   const handleDelete =async (meetingId) => {
 
-       const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`)
+       const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`, { method: 'DELETE' })
 
-       const response = deleteRequest.json()
+       const response =await deleteRequest.json()
 
        alert(response)
 
@@ -40,7 +42,7 @@ const MeetingCards = ({meeting}) => {
                 <Col lg={4} md={4} sm={12}>
                     
                     <h5> {topic}  ({courseTopic})  </h5>
-                    <p className='m-0'> <span className="meetingDetailsHeading"> Date </span>- {startDate.split("T")[0]} to {endDate.split("T")[0]} </p>
+                    <p className='m-0'> <span className="meetingDetailsHeading"> Date </span>- {startDate?.split("T")[0]} to {endDate?.split("T")[0]} </p>
                     <p className='m-0'> <span className="meetingDetailsHeading">Time</span> - {startTime} - {endTime} </p>
                     <p className='m-0'> <span className="meetingDetailsHeading">Participants Limit </span>- {membersLimit} </p>
                     <p className='m-0'> <span className="meetingDetailsHeading">Pre-requistees required </span>- {knowledgeRequired} </p>

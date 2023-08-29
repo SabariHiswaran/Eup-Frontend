@@ -21,14 +21,22 @@ const MeetingsList = () => {
 
     setCourseMeeting(responseData.courseMeetings)
   }
+
+  // if(courseMeeting.length === 0){
+  //   return (
+  //     <p> Currently there are no upcoming meetings for you.</p>
+  //   )
+  // }
   
-  return (
+  return courseMeeting.length ===0 ? (
+    <p> Your upcoming meeting details are being loaded...</p>
+    ) :(
     <Container>
 
       <h4 className='mx-4 px-5 mt-4'> Upcoming Meetings List </h4>
 
       <Container className='p-5'>
-      {courseMeeting.map((meeting) => {
+      {courseMeeting?.map((meeting) => {
         return(
           <MeetingCards meeting = {meeting} key={meeting.id}/>
         )
