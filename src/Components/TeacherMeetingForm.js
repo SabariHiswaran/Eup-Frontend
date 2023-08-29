@@ -333,7 +333,7 @@ const TeacherMeetingForm = () => {
         as={Link}
         to="/api/teacher/courses/upcomingMeetings"
         > 
-        View Upcoming Meetings 
+        View Upcoming Meetings  
         </Button>
 
     </Container>
