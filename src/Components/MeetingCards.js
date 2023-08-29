@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import './MeetingCards.css'
 
-const MeetingCards = ({meeting}) => {
+const MeetingCards = ({meeting,updateDelete}) => {
 
   const {
     id,
@@ -24,12 +24,15 @@ const MeetingCards = ({meeting}) => {
 
   const handleDelete =async (meetingId) => {
 
+      if(window.confirm("Are you sure you want to delete the meeting?")){
+        
+       updateDelete(meetingId)
+
        const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`, { method: 'DELETE' })
 
        const response =await deleteRequest.json()
 
-       alert(response)
-
+      }
   }
 
   return (

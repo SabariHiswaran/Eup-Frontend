@@ -7,7 +7,7 @@ const MeetingsList = () => {
 
   const [courseMeeting,setCourseMeeting] = useState([])
 
-  const [isLoading,setIsLoading] = useState(false)
+  const [isLoading,setIsLoading] = useState(null)
 
   useEffect(() => {
       fetchMeetingDetails()
@@ -27,6 +27,13 @@ const MeetingsList = () => {
     setCourseMeeting(responseData.courseMeetings)
 
     setIsLoading(false)
+  }
+
+  const updateDelete = (deleteMeetingId) => {
+
+    const updatedMeetingList = courseMeeting.filter(meeting => meeting.id !== deleteMeetingId)
+
+    setCourseMeeting(updatedMeetingList)
   }
 
   return(
@@ -49,14 +56,26 @@ const MeetingsList = () => {
      </Container>
       :
      null }
+
+     {
+     isLoading === false && courseMeeting.length === 0 ?<Container className='d-flex justify-content-center'>
+    
+     <h4 className='mx-4 px-5 mt-4'> Currently there is no upcoming meetings for you. </h4>
+
+     </Container> 
+     : 
+     null 
+      }
+
     </Container>
 
+   
     <Container>
 
       <Container className='p-5'>
       {courseMeeting?.map((meeting) => {
         return(
-          <MeetingCards meeting = {meeting} key={meeting.id}/>
+          <MeetingCards meeting = {meeting} key={meeting.id} updateDelete={updateDelete}/>
         )
       })}
 
