@@ -8,6 +8,7 @@ import CourseList from './Components/CourseList';
 import CourseSubTopicList from './Components/CourseSubTopicList';
 import TeacherMeetingForm from './Components/TeacherMeetingForm';
 import MeetingsList from './Components/MeetingsList';
+import EditMeeting from './Components/EditMeeting';
 
 
 const appRouter = createBrowserRouter([
@@ -45,6 +46,10 @@ const appRouter = createBrowserRouter([
       {
         path : "/api/teacher/courses/upcomingMeetings",
         element : <MeetingsList/>
+      },
+      {
+        path : "/api/teacher/courses/upcomingMeetings/editMeeting/:meetingId",
+        element : <EditMeeting/>
       }
     ],
     errorElement:<ErrorPage/>

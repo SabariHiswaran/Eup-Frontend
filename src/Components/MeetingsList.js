@@ -13,9 +13,6 @@ const MeetingsList = () => {
       fetchMeetingDetails()
   },[])
 
-
-  console.log(courseMeeting)
-
   const fetchMeetingDetails = async () => {
 
     setIsLoading(true)

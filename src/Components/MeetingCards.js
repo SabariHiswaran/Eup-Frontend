@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import './MeetingCards.css'
+import { Link } from 'react-router-dom'
 
 const MeetingCards = ({meeting,updateDelete}) => {
 
@@ -55,7 +56,13 @@ const MeetingCards = ({meeting,updateDelete}) => {
 
                 <Col lg={4} md={4} sm={12} className='d-flex justify-content-around align-items-center p-3'> 
                     
-                    <Button variant="danger"> Edit </Button>
+                    <Button 
+                    variant="danger"
+                    as={Link}
+                    to={`editMeeting/${id}`}
+                    > 
+                    Edit 
+                    </Button>
 
                     <Button 
                     variant="danger" 
