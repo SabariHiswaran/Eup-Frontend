@@ -5,6 +5,8 @@ import Prompt from './Prompt'
 import * as Yup from "yup"
 import moment from 'moment/moment'
 import { Button, Container,Row,Col } from 'react-bootstrap'
+import _ from 'lodash'
+import { isEqual } from 'lodash'
 
 import { ColorRing } from 'react-loader-spinner'
 
@@ -26,6 +28,20 @@ const EditForm = ({meetingDetails}) => {
         knowledgeRequired
       }  = meetingDetails
     
+      const validateMeetingDetails = {
+        courseTopic,
+        topic ,
+        membersLimit,   
+        startDate:startDate?.split("T")[0],
+        endDate:endDate?.split("T")[0],
+        startTime,
+        endTime, 
+        totalDays,     
+        name,
+        designation,
+        experience,        
+        knowledgeRequired
+      } 
 
     const navigate = useNavigate()
 
@@ -43,8 +59,8 @@ const EditForm = ({meetingDetails}) => {
       startDate:startDate?.split("T")[0],
       endDate:endDate?.split("T")[0],
       startTime,
-      endTime,
-      totalDays,        //convert to number
+      endTime,  
+      totalDays,     //convert to number
       name,
       designation,
       experience,         //convert to number
@@ -73,17 +89,23 @@ const EditForm = ({meetingDetails}) => {
     }),
     onSubmit:async (values,{resetForm}) => {
 
+      if(_.isEqual(validateMeetingDetails,values) ) {
+        return alert("Please note that meeting Details are not updated. If there is no updates in meeting records , then please click on Go Back.")
+      }
+
       setDisplayForm(false)
 
       setIsSubmitting(true)
 
-      const createMeeting =await  fetch("http://localhost:5000/api/teacher/courses/createMeeting", {
+      const createMeeting =await  fetch(`http://localhost:5000/api/teacher/courseMeetings/${id}`, {
           method: "PATCH",
           headers: { 'Content-Type': 'application/json' },
           body : JSON.stringify(values)
         })
       
       const responseFromServer = await createMeeting.json()
+
+      console.log(responseFromServer)
 
       resetForm()
 
@@ -314,7 +336,7 @@ const EditForm = ({meetingDetails}) => {
 
     <Container className='d-flex flex-column justify-content-center align-items-center p-5'>
 
-        <h3> Your meeting details has been successfully posted. </h3>
+        <h3> Your meeting details has been successfully Updated. </h3>
 
         <Button 
         variant='danger' 

@@ -12,7 +12,7 @@ const EditMeeting = () => {
 
     const [meetingDetails,setMeetingDetails] = useState([])
 
-    const [isLoading,setIsLoading] = useState(null)
+    const [isLoading,setIsLoading] = useState(true)
     
 
     useEffect(() => {
@@ -20,9 +20,7 @@ const EditMeeting = () => {
     },[])
   
     const fetchMeetingDetails = async () => {
-  
-      setIsLoading(true)
-  
+
       const meeting =await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`)
   
       const responseData = await meeting.json()
