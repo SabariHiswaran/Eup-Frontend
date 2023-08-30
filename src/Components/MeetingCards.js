@@ -21,7 +21,6 @@ const MeetingCards = ({meeting,updateDelete}) => {
     knowledgeRequired
   }  = meeting
 
-  console.log(meeting)
 
   const handleDelete =async (meetingId) => {
 
