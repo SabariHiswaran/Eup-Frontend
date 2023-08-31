@@ -9,11 +9,10 @@ import CourseSubTopicList from './Components/CourseSubTopicList';
 import TeacherMeetingForm from './Components/TeacherMeetingForm';
 import MeetingsList from './Components/MeetingsList';
 import EditMeeting from './Components/EditMeeting';
-import { RoleContext } from './Context/RoleContext';
-import { useState } from 'react';
+import  { Role } from './Components/Context/RoleContext';
 
 
-const appRouter = createBrowserRouter([
+const teacherRouter = createBrowserRouter([
 
   {
 
@@ -61,20 +60,24 @@ const appRouter = createBrowserRouter([
 ])
 
 
+const studentRouter = createBrowserRouter([
+  {
+    path : "/",
+    element: <Header/>
+   }
+])
+
 function App() {
 
-  const [teacherRole , setTeacherRole ] = useState(true)
-  const [studentRole,setStudentRole]  =useState(false)
-
-  const handleRole = () => {
-    setTeacherRole(prevVal => !prevVal)
-    setStudentRole(prevVal => !prevVal)
-  }
+    const { teacherRole } = Role()
+ 
 
   return (
-        <RoleContext.Provider value={ { teacherRole : teacherRole , studentRole : studentRole , handleRole : handleRole}}>
-        <RouterProvider router = {appRouter} />
-        </RoleContext.Provider>
+        
+        <RouterProvider router = {teacherRole ? teacherRouter : studentRouter} />
+      
+
+
   );
 }
 

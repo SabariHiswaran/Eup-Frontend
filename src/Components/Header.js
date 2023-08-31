@@ -1,22 +1,16 @@
 import React from 'react'
 import './Header.css'
 import { Container, Form } from 'react-bootstrap';
-import { IoIosArrowDropdownCircle, IoIosArrowDropupCircle } from 'react-icons/io'
 import TeacherNavBar from './TeacherNavBar';
-import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import { RoleContext } from '../Context/RoleContext';
-import { useContext } from 'react';
+
+import { Role } from './Context/RoleContext';
+import StudentNavBar from './Student/StudentNavBar';
 
 const Header = () => {
 
-    const roleContext = useContext(RoleContext)
+    const { teacherRole, studentRole, handleRole } = Role()
 
-    const [navStatus, setNavStatus] = useState(true)
-
-    const handleDropDownClick = () => {
-        setNavStatus(prevState => !prevState)
-    }
 
     return (
         <>
@@ -28,38 +22,32 @@ const Header = () => {
 
             <Container className=" d-flex justify-content-center">
 
-                {/* <span onClick={handleDropDownClick} className='nav-dropDown'>
+                <Form>
+                    <Container className=" d-flex justify-content-center">
+                        <Form.Check // prettier-ignore
+                            type="switch"
+                            id="custom-switch"
+                            label="Teacher"
+                            onChange={handleRole}
+                            checked={teacherRole}
+                            className='mx-3'
+                        />
 
-                    {navStatus ? <IoIosArrowDropdownCircle /> : <IoIosArrowDropupCircle />}
-
-                </span> */}
-
-            <Form>
-
-            <Container className=" d-flex justify-content-center ">
-                    <Form.Check 
-                    type="switch"
-                    id="custom-switch"
-                    label="Teacher"
-                    className='mx-3'
-                    onChange={roleContext.handleRole}
-                    checked={roleContext.teacherRole}
-                    />
-
-                    <Form.Check 
-                    type="switch"
-                    id="custom-switch"
-                    label="Student"
-                    onChange={roleContext.handleRole}
-                    checked={roleContext.studentRole}
-                    />
+                        <Form.Check // prettier-ignore
+                            type="switch"
+                            id="custom-switch2"
+                            label="Student"
+                            onChange={handleRole}
+                            checked={studentRole}
+                        />
                     </Container>
-            </Form>
+                </Form>
+
             </Container>
 
-            {navStatus && <TeacherNavBar />}
+            {teacherRole ? <TeacherNavBar /> : <StudentNavBar />}
 
-            <Outlet/>
+            <Outlet />
 
         </>
     )
