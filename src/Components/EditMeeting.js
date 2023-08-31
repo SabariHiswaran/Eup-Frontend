@@ -30,8 +30,6 @@ const EditMeeting = () => {
       setIsLoading(false)
     }
 
-    console.log(meetingDetails)
-
 
   return (
     <>

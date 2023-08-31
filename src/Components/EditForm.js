@@ -105,8 +105,6 @@ const EditForm = ({meetingDetails}) => {
       
       const responseFromServer = await createMeeting.json()
 
-      console.log(responseFromServer)
-
       resetForm()
 
       setIsSubmitting(false)
