@@ -9,7 +9,7 @@ const StudentCourseTopic = ({course}) => {
   
   return (
     
-    <Card body style={{width : "20rem"}} className="m-4 mt-2 text-center course-topic" as={Link} to={`/api/teacher/courses/${topic}`}> 
+    <Card body style={{width : "20rem"}} className="m-4 mt-2 text-center course-topic" as={Link} to={`/api/student/courses/${topic}`}> 
 
         {topic}
 

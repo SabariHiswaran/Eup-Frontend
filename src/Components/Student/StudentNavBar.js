@@ -21,18 +21,6 @@ const StudentNavBar = () => {
           <Nav.Link as={Link} to="/api/student/courses/registeredMeetings">Meetings</Nav.Link>
         </Nav.Item>
 
-        {/* <Nav.Item>
-          <Nav.Link eventKey="link-3">Enrolled Members</Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link eventKey="link-4">Rewards</Nav.Link>
-        </Nav.Item>
-
-        <Nav.Item>
-          <Nav.Link eventKey="link-5">Badge</Nav.Link>
-        </Nav.Item> */}
-
       </Nav>
   )
 }
