@@ -10,6 +10,9 @@ import TeacherMeetingForm from './Components/TeacherMeetingForm';
 import MeetingsList from './Components/MeetingsList';
 import EditMeeting from './Components/EditMeeting';
 import  { Role } from './Components/Context/RoleContext';
+import StudentHomepage from './Components/Student/StudentHomepage';
+import StudentCourseList from './Components/Student/StudentCourseList';
+import StudentErrorPage from './Components/Student/StudentErrorPage';
 
 
 const teacherRouter = createBrowserRouter([
@@ -63,7 +66,49 @@ const teacherRouter = createBrowserRouter([
 const studentRouter = createBrowserRouter([
   {
     path : "/",
-    element: <Header/>
+    element: <Header/>,
+    children :
+    [
+      {
+
+      path: "/",
+      element : <StudentHomepage/>
+
+      },
+      {
+
+      path: "/api/student/courses",
+      element : <StudentCourseList/>
+  
+      },
+      {
+
+      path: "/api/teacher/courses",
+      element : <StudentHomepage/>
+  
+      },
+      {
+  
+      path: "/api/teacher/courses/:courseTopic",
+      element : <StudentHomepage/>
+    
+      },
+      {
+  
+      path: "/api/teacher/courses/:courseTopic/:topic",
+      element : <StudentHomepage/>
+    
+      },
+      {
+        path :"/api/teacher/courses/upcomingMeetings" ,
+        element : <StudentHomepage/>
+      },
+      {
+        path : "/api/teacher/courses/upcomingMeetings/editMeeting/:meetingId",
+        element : <StudentHomepage/>
+      }
+    ],
+    errorElement : <StudentErrorPage/>
    }
 ])
 

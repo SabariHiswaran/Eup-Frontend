@@ -9,6 +9,7 @@ const RoleContext = ({children}) => {
     const [studentRole, setStudentRole] = useState(false)
 
     const handleRole = () => {
+      
         setTeacherRole(prevVal => !prevVal)
         setStudentRole(prevVal => !prevVal)
     }

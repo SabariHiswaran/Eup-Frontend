@@ -2,7 +2,7 @@ import React from 'react'
 import './Header.css'
 import { Container, Form } from 'react-bootstrap';
 import TeacherNavBar from './TeacherNavBar';
-import { Outlet } from 'react-router-dom';
+import {  Outlet } from 'react-router-dom';
 
 import { Role } from './Context/RoleContext';
 import StudentNavBar from './Student/StudentNavBar';
@@ -39,7 +39,7 @@ const Header = () => {
                             label="Student"
                             onChange={handleRole}
                             checked={studentRole}
-                        />
+                                                 />
                     </Container>
                 </Form>
 

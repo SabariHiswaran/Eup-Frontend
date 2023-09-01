@@ -6,7 +6,7 @@ import { useRouteError } from 'react-router-dom'
 const ErrorPage = () => {
 
     const error = useRouteError()
-    
+    console.log(error)
   return (
    <Container>
         <h4> Something went wrong!</h4>
