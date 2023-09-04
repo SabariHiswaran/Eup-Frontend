@@ -13,6 +13,8 @@ import  { Role } from './Components/Context/RoleContext';
 import StudentHomepage from './Components/Student/StudentHomepage';
 import StudentCourseList from './Components/Student/StudentCourseList';
 import StudentErrorPage from './Components/Student/StudentErrorPage';
+import StudentSubTopicList from './Components/Student/StudentSubTopicList';
+import StudentMeetingsList from './Components/Student/StudentMeetingList';
 
 
 const teacherRouter = createBrowserRouter([
@@ -80,6 +82,19 @@ const studentRouter = createBrowserRouter([
       path: "/api/student/courses",
       element : <StudentCourseList/>
   
+      },
+      {
+  
+      path: "/api/student/courses/:courseTopic",
+      element : <StudentSubTopicList/>
+    
+      },
+      ,
+      {
+  
+      path: "/api/student/courses/:courseTopic/:topic/upcomingMeetings",
+      element : <StudentMeetingsList/>
+    
       },
       {
 

@@ -18,7 +18,7 @@ const StudentNavBar = () => {
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link as={Link} to="/api/student/courses/registeredMeetings">Meetings</Nav.Link>
+          <Nav.Link as={Link} to="/api/student/courses/registeredMeetings">Registered Meetings</Nav.Link>
         </Nav.Item>
 
       </Nav>
