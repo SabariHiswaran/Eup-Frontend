@@ -60,6 +60,7 @@ const EnrolledMeetingList = () => {
                     null
             }
 
+            {meetings.length > 0 ?
             <Container>
 
                 <Container className='p-5'>
@@ -72,6 +73,8 @@ const EnrolledMeetingList = () => {
                 </Container>
 
             </Container>
+            : 
+            null}
 
         </Container>
     )

@@ -27,7 +27,7 @@ const Header = () => {
                         <Form.Check // prettier-ignore
                             type="switch"
                             id="custom-switch"
-                            label="Teacher"
+                            label="Trainer"
                             onChange={handleRole}
                             checked={teacherRole}
                             className='mx-3'
@@ -36,7 +36,7 @@ const Header = () => {
                         <Form.Check // prettier-ignore
                             type="switch"
                             id="custom-switch2"
-                            label="Student"
+                            label="Trainee"
                             onChange={handleRole}
                             checked={studentRole}
                                                  />
