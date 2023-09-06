@@ -39,7 +39,7 @@ const SelectedMeeting = () => {
 
     return (
         <Container>
-            <h4 className='mx-4 px-5 mt-4'> Register Meeting  </h4>
+            <h4 className=' px-5 mt-4'> Register Meeting : </h4>
             {isLoading ?
                 <Container className='d-flex justify-content-center'>
                     <ColorRing

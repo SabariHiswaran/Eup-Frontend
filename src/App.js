@@ -16,6 +16,7 @@ import StudentErrorPage from './Components/Student/StudentErrorPage';
 import StudentSubTopicList from './Components/Student/StudentSubTopicList';
 import StudentMeetingsList from './Components/Student/StudentMeetingList';
 import SelectedMeeting from './Components/Student/SelectedMeeting';
+import EnrolledMeetingList from './Components/Student/EnrolledMeetingList';
 
 
 const teacherRouter = createBrowserRouter([
@@ -83,6 +84,10 @@ const studentRouter = createBrowserRouter([
       path: "/api/student/courses",
       element : <StudentCourseList/>
   
+      },
+      {
+        path : "/api/student/courses/enrolledMeetings",
+        element : <EnrolledMeetingList/>
       },
       {
   
