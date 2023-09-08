@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Card, Container } from 'react-bootstrap'
+import { Button, Card, Container } from 'react-bootstrap'
 
 import "./EnrolledMeetings.css"
 import { ColorRing } from 'react-loader-spinner'
 import MeetingShimmer from './MeetingShimmer'
 import { Link } from 'react-router-dom'
+import ModeComponent from './ModeComponent'
 
 const EnrolledMeetings = ({ meeting }) => {
 
@@ -12,7 +13,10 @@ const EnrolledMeetings = ({ meeting }) => {
 
   const [courseDetails,setCourseDetails] = useState({})
 
+  const [unEnroll,setUnenroll] = useState(false)
+
   const {
+    id,
     name,
     designation,
     experience,
@@ -61,6 +65,10 @@ const EnrolledMeetings = ({ meeting }) => {
 
   console.log(courseDetails)
 
+  const hanldeUnRegister = () => {
+    setUnenroll(true)
+  }
+
   return (
     <>
        <Card style={{ width: '23rem' }}>
@@ -96,12 +104,20 @@ const EnrolledMeetings = ({ meeting }) => {
           <p className='m-0'> <span className="meetingDetailsHeading">Status :</span> - {empStatus} </p>
           <p className='m-0'> {name} | {designation} | {experience} years  </p>
         </Card.Text>
-        <Card.Link>Unregister</Card.Link>
+        <Button variant='danger' onClick={hanldeUnRegister}>Unregister</Button>
         
       </Card.Body>
       
       } 
     </Card>
+
+    {
+      unEnroll 
+      ? 
+      <ModeComponent id={id} meetingId={meetingId} unEnroll = {unEnroll} setUnenroll={setUnenroll} />
+      :
+      null
+    }
     </>
   )
 }

@@ -17,6 +17,7 @@ import StudentSubTopicList from './Components/Student/StudentSubTopicList';
 import StudentMeetingsList from './Components/Student/StudentMeetingList';
 import SelectedMeeting from './Components/Student/SelectedMeeting';
 import EnrolledMeetingList from './Components/Student/EnrolledMeetingList';
+import UnEnrollMeeting from './Components/Student/UnEnrollMeeting';
 
 
 const teacherRouter = createBrowserRouter([
@@ -88,6 +89,10 @@ const studentRouter = createBrowserRouter([
       {
         path : "/api/student/courses/enrolledMeetings",
         element : <EnrolledMeetingList/>
+      },
+      {
+        path : "/api/student/courses/enrolledMeetings/unregister/:id/:meetingId",
+        element : <UnEnrollMeeting/>
       },
       {
   

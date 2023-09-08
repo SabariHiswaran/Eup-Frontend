@@ -1,49 +1,70 @@
 import React, { useEffect, useState } from 'react'
 import CourseTopic from './CourseTopic'
 import { Container } from 'react-bootstrap'
+import { ColorRing } from 'react-loader-spinner'
 
 const CourseList = () => {
 
-  const [courses,setCourses] = useState([])
+  const [courses, setCourses] = useState([])
+
+  const [isLoading, setIsLoading] = useState(null)
 
   useEffect(() => {
 
-      fetchCourses()
+    fetchCourses()
 
-  },[])
+  }, [])
 
   const fetchCourses = async () => {
 
-    const courseData =await fetch("http://localhost:5000/api/teacher/courses")
+    setIsLoading(true)
+
+    const courseData = await fetch("http://localhost:5000/api/teacher/courses")
 
     const result = await courseData.json()
 
     setCourses(result.courses.courseLists)
-
+    setIsLoading(false)
   }
-  
-  return ( 
+
+  return (
 
     <Container>
 
-    <h4 className='mx-4 px-5 mt-4'> Course List :  </h4>
+      <h4 className='mx-4 px-5 mt-4'> Course List :  </h4>
 
-    <p className='mx-4 px-5'> You can choose any course topic that you would like to teach.</p>
+      <p className='mx-4 px-5'> You can choose any course topic that you would like to teach.</p>
 
-    <Container className='d-flex flex-wrap justify-content-between align-items-center py-3 px-5'>
+      {isLoading ?
+        <Container className='d-flex justify-content-center'>
+          <ColorRing
+            visible={true}
+            height="80"
+            width="80"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
 
-      {courses.map((course,index) => {
+        </Container>
+        :
+        null}
 
-        return(
-         <CourseTopic course = {course} key={index} />
-        )
-      })}
-     
-    </Container>
+      <Container className='d-flex flex-wrap justify-content-between align-items-center py-3 px-5'>
+
+        {courses.map((course, index) => {
+
+          return (
+            <CourseTopic course={course} key={index} />
+          )
+        })}
+
+      </Container>
 
     </Container>
 
   )
-} 
+}
 
 export default CourseList
