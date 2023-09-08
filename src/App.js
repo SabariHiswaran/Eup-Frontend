@@ -144,10 +144,10 @@ function App() {
  
 
   return (
-        
+    <>
         <RouterProvider router = {teacherRole ? teacherRouter : studentRouter} />
       
-
+   </>
 
   );
 }
