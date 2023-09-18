@@ -22,7 +22,7 @@ const TeacherNavBar = () => {
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link eventKey="link-3">Enrolled Members</Nav.Link>
+          <Nav.Link as={Link} to="/api/teacher/courses/enrolledMembers">Enrolled Members</Nav.Link>
         </Nav.Item>
 
         <Nav.Item>

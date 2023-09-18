@@ -18,6 +18,7 @@ import StudentMeetingsList from './Components/Student/StudentMeetingList';
 import SelectedMeeting from './Components/Student/SelectedMeeting';
 import EnrolledMeetingList from './Components/Student/EnrolledMeetingList';
 import UnEnrollMeeting from './Components/Student/UnEnrollMeeting';
+import EnrolledMembers from './Components/EnrolledMembers';
 
 
 const teacherRouter = createBrowserRouter([
@@ -59,6 +60,10 @@ const teacherRouter = createBrowserRouter([
       {
         path : "/api/teacher/courses/upcomingMeetings/editMeeting/:meetingId",
         element : <EditMeeting/>
+      },
+      {
+        path : "/api/teacher/courses/enrolledMembers",
+        element : <EnrolledMembers/>
       }
     ],
     errorElement:<ErrorPage/>
