@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { Button, Col, Container, Row, Table } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { Link } from 'react-router-dom'
+import EnrolledMemberTable from './EnrolledMemberTable'
 
 const EnrolledMeetingCards = ({ meeting }) => {
 
@@ -33,7 +34,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
         setIsLoading(true)
 
-        const members = await fetch("http://localhost:5000/api/teacher/courses/enrolledMembers")
+        const members = await fetch(`http://localhost:5000/api/teacher/courses/enrolledMembers/${id}`)
 
         const responseData = await members.json()
 
@@ -43,6 +44,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
     }
 
+    console.log(members)
     return (
         <Container className=' border-bottom border-dark '>
 
@@ -106,8 +108,27 @@ const EnrolledMeetingCards = ({ meeting }) => {
                             null
                     }
 
-                    
+                    <Container>
 
+
+                        <Table bordered hover>
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Account</th>
+                                    <th>More Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {members.map(member => {
+                                return (
+                                    <EnrolledMemberTable memberDetails={member} tableId={members.indexOf(member) + 1} key={member.id} />
+                                )
+                            })}
+                            </tbody>
+                        </Table>
+                    </Container>
 
 
                 </Col>
