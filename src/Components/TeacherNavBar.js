@@ -10,7 +10,7 @@ const TeacherNavBar = () => {
     <Nav className="justify-content-center" activeKey="/home">
 
         <Nav.Item>
-          <Nav.Link as={Link} to="/">Home</Nav.Link>
+          <Nav.Link as={Link} to="/api/teacher">Home</Nav.Link>
         </Nav.Item>
 
         <Nav.Item>

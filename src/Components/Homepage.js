@@ -6,6 +6,7 @@ import "../Components/Homepage.css"
 import { Role } from './Context/RoleContext'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { Auth } from './Context/AuthContext'
 
 const Homepage = () => {
 
@@ -13,6 +14,7 @@ const Homepage = () => {
 
   const [courseMeeting,setCourseMeeting] = useState([])
 
+  const {token} = Auth()
   
   useEffect(() => {
     fetchMeetingDetails()
@@ -20,10 +22,10 @@ const Homepage = () => {
 
 const fetchMeetingDetails = async () => {
 
-  const meetingDetails =await fetch("http://localhost:5000/api/teacher/courseMeetings")
+  const meetingDetails =await fetch("http://localhost:5000/api/teacher/courseMeetings",{ headers :{'Authorization' : `Bearer ${token}`}})
 
   const responseData = await meetingDetails.json()
-
+  console.log(responseData)
   setCourseMeeting(responseData.courseMeetings)
 
 }
@@ -79,14 +81,14 @@ const fetchMeetingDetails = async () => {
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'>Overall Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting.length === 0 ? "Loading..." : courseMeeting.length}</ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : courseMeeting?.length}</ListGroup.Item>
       </ListGroup>
     </Card>
 
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'> Upcoming Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting.length === 0 ? "Loading..." : courseMeeting.length}</ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : courseMeeting?.length}</ListGroup.Item>
       </ListGroup>
     </Card>
 

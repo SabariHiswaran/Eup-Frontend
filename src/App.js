@@ -20,6 +20,7 @@ import EnrolledMeetingList from './Components/Student/EnrolledMeetingList';
 import UnEnrollMeeting from './Components/Student/UnEnrollMeeting';
 import EnrolledMembers from './Components/EnrolledMembers';
 import SignupPage from './Components/SignupPage';
+import LogininPage from './Components/LogininPage';
 
 
 const teacherRouter = createBrowserRouter([
@@ -27,7 +28,10 @@ const teacherRouter = createBrowserRouter([
     path: "/",
     element: <SignupPage />,
   }
-  ,
+  , {
+    path : "/login",
+    element : <LogininPage/>,
+  },
   {
 
     path: "/api/teacher",
@@ -83,7 +87,10 @@ const studentRouter = createBrowserRouter([
     path: "/",
     element: <SignupPage />,
   }
-  ,
+  ,{
+    path : "/login",
+    element : <LogininPage/>
+  },
   {
     path: "/api/student",
     element: <Header />,
@@ -201,10 +208,9 @@ function App() {
 
 
   return (
-    <>
+ 
       <RouterProvider router={teacherRole ? teacherRouter : studentRouter} />
 
-    </>
 
   );
 }

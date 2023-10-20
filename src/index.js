@@ -7,14 +7,17 @@ import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.min.css';   //bootstrap
 import RoleContext from './Components/Context/RoleContext';
+import AuthContextComponent from './Components/Context/AuthContext';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
+  <AuthContextComponent>
     <RoleContext>
     <App />
     </RoleContext>
+    </AuthContextComponent>
    
  // </React.StrictMode> 
 );

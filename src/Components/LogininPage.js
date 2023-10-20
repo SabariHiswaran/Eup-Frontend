@@ -1,14 +1,13 @@
 import { useFormik } from 'formik'
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-
+import React, {  useState } from 'react'
+import {  useNavigate } from 'react-router-dom'
 import * as Yup from "yup"
 import { Button, Container, Row, Col } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { Auth } from './Context/AuthContext'
 // import _ from 'lodash'
 
-const SignupPage = () => {
+const LogininPage = () => {
 
 
     const navigate = useNavigate()
@@ -20,21 +19,17 @@ const SignupPage = () => {
 
       const [serverResponse,setServerResponse] = useState({})
 
-      const {login} = Auth()
-
+    const {login} = Auth()
 
     const formik = useFormik({
         initialValues: {
-            name: "",
             emailId: "",
-            password: "",
-            designation : ""
+            password: ""
         },
         validationSchema: Yup.object({
-            name: Yup.string().required("Your name is required"),
+           
             emailId: Yup.string().email().required("Your email ID is required"),
             password: Yup.string().required("Your password is required"),
-            designation : Yup.string().required("Your Designation is required")
         }),
         onSubmit: async (values, { resetForm }) => {
 
@@ -44,7 +39,7 @@ const SignupPage = () => {
               setIsSubmitting(true)
 
 
-              const createNewUser = await fetch("http://localhost:5000/",{
+              const createNewUser = await fetch("http://localhost:5000/login",{
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
                 body : JSON.stringify(values)
@@ -52,8 +47,10 @@ const SignupPage = () => {
 
               const responseFromServer = await createNewUser.json()
 
-              login(responseFromServer.userId,responseFromServer.token)
               console.log(responseFromServer)
+
+              login(responseFromServer.userId,responseFromServer.token)
+
               setServerResponse(responseFromServer)
               resetForm()
 
@@ -90,7 +87,7 @@ const SignupPage = () => {
 
                 <Container>
 
-                    <Row style = {{height : "400px"}}>
+                    <Row style = {{height : "280px"}}>
 
                         <Col lg={4} md={4} sm={0} >
 
@@ -100,16 +97,6 @@ const SignupPage = () => {
                         <Col lg={4} md={4} sm={0} className='d-flex flex-column justify-content-center py-3 px-5'>
 
                             <Container>
-                                <input
-                                    type='text'
-                                    placeholder='Name'
-                                    value={formik.values.name}
-                                    name='name'
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    style={ {width : "300px", height : " 30px", borderRadius : "5px", padding : "20px",border : "1px solid gray"}}
-                                />
-                                {formik.touched.name && formik.errors.name ? <p className="error-text"> {formik.errors.name}</p> : null}
                                 
 
                                 <input
@@ -136,37 +123,25 @@ const SignupPage = () => {
                                 />
                                 {formik.touched.password && formik.errors.password ? <p className="error-text"> {formik.errors.password}</p> : null}
                               
-                                <input
-                                    type='string'
-                                    placeholder='Designation'
-                                    value={formik.values.designation}
-                                    name='designation'
-                                    onChange={formik.handleChange}
-                                    onBlur={formik.handleBlur}
-                                    style={ {width : "300px", height : " 30px", borderRadius : "5px", padding : "20px",marginTop : "15px",border : "1px solid gray"}}
-                                />
-                                {formik.touched.designation && formik.errors.designation ? <p className="error-text"> {formik.errors.designation}</p> : null}
-                              
                                 <Button
                                 variant='secondary'
                                 onClick={formik.handleSubmit}
                                 className='mx-2 mt-4'
                             >
-                                Sign up
+                               Login
                             </Button>
-
                             <Container className='d-flex align-items-center justify-content-center mt-3'>
                                 
-                            <p className='mt-2'> Already have an account ? </p>
-                            <Button
-                                variant='secondary'
-                                onClick={() => navigate("/login")}
-                                className='mx-2'
-                            >
-                                Log In
-                            </Button>
-
-                        </Container>
+                                <p className='mt-2'> Don't have an account ? </p>
+                                <Button
+                                    variant='secondary'
+                                    onClick={() => navigate("/")}
+                                    className='mx-2'
+                                >
+                                   Sign Up
+                                </Button>
+    
+                            </Container>
 
                             </Container>
                         </Col>
@@ -190,7 +165,7 @@ const SignupPage = () => {
             !displayForm && 
                 <Container className='d-flex flex-column justify-content-center align-items-center p-5'>
 
-                <h3> Please wait while we are setting up your account</h3>
+                <h3> You are now logging into your account</h3>
                 {/* react loading spinner */}
                 <ColorRing
                 visible={true}
@@ -213,7 +188,7 @@ const SignupPage = () => {
           
                         setIsSubmitting(false)
           
-                    navigate(-1)}}> Go To Sign Up Page </Button>
+                    navigate("/login")}}> Go To Login Page </Button>
             </Container>
             :
             !displayForm &&
@@ -224,4 +199,4 @@ const SignupPage = () => {
     )
 }
 
-export default SignupPage
+export default LogininPage
