@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import './StudentMeetingCards.css'
 import { Link } from 'react-router-dom'
+import { Auth } from '../Context/AuthContext'
 
 const StudentMeetingCards = ({meeting}) => {
 
@@ -21,6 +22,33 @@ const StudentMeetingCards = ({meeting}) => {
     knowledgeRequired
   }  = meeting
 
+  const {token} = Auth()
+  
+  const [ members,setMembers] = useState([])
+
+  const [isLoading,setIsLoading] = useState(false)
+
+  useEffect(() => {
+    
+    fetchEnrolledMembers()
+},[])
+
+  
+  
+  const fetchEnrolledMembers = async () => {
+
+    setIsLoading(true)
+    const members = await fetch(`http://localhost:5000/api/teacher/courses/enrolledMembers/${id}`,{ headers :{'Authorization' : `Bearer ${token}`}})
+
+    const responseData = await members.json()
+
+    setMembers(responseData.members)
+
+    setIsLoading(false)
+
+}
+
+  const checkLimit = members?.length === membersLimit ? "Participant Limit reached" : "Register"
 
   return (
     <Container className='p-3 border-bottom border-dark my-2 '>
@@ -43,11 +71,16 @@ const StudentMeetingCards = ({meeting}) => {
                 <Col lg={4} md={4} sm={12} className='d-flex justify-content-around align-items-center p-3'> 
                     
                     <Button 
-                    variant="danger"
+                    variant={checkLimit === "Participant Limit reached" ? "secondary" : "danger"}
                     as={Link}
                     to={`register/${id}`}
+                    disabled = {checkLimit === "Participant Limit reached" ? true : false}
                     > 
-                    Register 
+                    {isLoading ? 
+                    "Loading...."
+                  : 
+                    checkLimit
+}
                     </Button>
 
                    

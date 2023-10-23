@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { useParams } from 'react-router-dom'
 import RegisterMeeting from './RegisterMeeting'
+import { Auth } from '../Context/AuthContext'
 
 const SelectedMeeting = () => {
 
@@ -13,6 +14,8 @@ const SelectedMeeting = () => {
     const [isLoading, setIsLoading] = useState(null)
 
     const [meeting, setMeeting] = useState({})
+
+    const {token} = Auth()
 
     useEffect(() => {
 
@@ -25,7 +28,7 @@ const SelectedMeeting = () => {
 
         setIsLoading(true)
 
-        const selectedMeeting = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${meetingId}`)
+        const selectedMeeting = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${meetingId}`,{ headers :{'Authorization' : `Bearer ${token}`}})
 
         const responseData = await selectedMeeting.json()
 

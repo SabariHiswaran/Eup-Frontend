@@ -1,12 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Nav } from 'react-bootstrap';
+import { Button, Nav } from 'react-bootstrap';
 
 import '../Components/TeacherNavBar.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Auth } from './Context/AuthContext';
+import LogoutModeComponent from './LogoutModelComponent';
+import { Role } from './Context/RoleContext';
 
 const TeacherNavBar = () => {
+
+  const {isLoggedIn, logout} = Auth()
+
+  const [isLogout, setIsLogout] = useState(false)
+
+  const {setTeacherRole} = Role()
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    setIsLogout(true)
+    setTeacherRole(true)
+  }
   return (
+    <>
     <Nav className="justify-content-center" activeKey="/home">
 
         <Nav.Item>
@@ -32,8 +49,23 @@ const TeacherNavBar = () => {
         <Nav.Item>
           <Nav.Link eventKey="link-5">Badge</Nav.Link>
         </Nav.Item>
+        {
+                isLoggedIn && 
+                <Button 
+                variant='danger'
+                onClick={handleLogout}> Logout </Button>
+        }
 
       </Nav>
+
+     
+
+      {isLogout ?
+        <LogoutModeComponent isLogout = {isLogout} setIsLogout={ setIsLogout} />
+      : 
+      null 
+    }
+      </>
   )
 }
 

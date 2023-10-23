@@ -6,6 +6,7 @@ import "./StudentHomepage.css"
 import { Role } from '../Context/RoleContext'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { Auth } from '../Context/AuthContext'
 
 const Homepage = () => {
 
@@ -16,6 +17,8 @@ const Homepage = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
+  const {token} = Auth()
+  
   useEffect(() => {
       fetchEnrolledMeetings()
   }, [])
@@ -24,7 +27,7 @@ const Homepage = () => {
   const fetchEnrolledMeetings = async () => {
 
 
-      const meetingList = await fetch("http://localhost:5000/api/student/courses/enrolledMeetings")
+      const meetingList = await fetch("http://localhost:5000/api/student/courses/enrolledMeetings",{ headers :{'Authorization' : `Bearer ${token}`}})
 
       const response = await meetingList.json()
 

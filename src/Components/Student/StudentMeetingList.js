@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { useParams } from 'react-router-dom'
 import StudentMeetingCards from './StudentMeetingCards'
+import { Auth } from '../Context/AuthContext'
 
 const StudentMeetingsList = () => {
 
@@ -12,15 +13,18 @@ const StudentMeetingsList = () => {
 
   const {courseTopic,topic} = useParams()
 
+
+  const {token} = Auth()
   useEffect(() => {
       fetchMeetingDetails()
+      
   },[])
 
   const fetchMeetingDetails = async () => {
 
     setIsLoading(true)
 
-    const meetingDetails =await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/upcomingMeetings`)
+    const meetingDetails =await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/upcomingMeetings`,{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const responseData = await meetingDetails.json()
 
@@ -28,6 +32,7 @@ const StudentMeetingsList = () => {
 
     setIsLoading(false)
   }
+
 
 
   return(

@@ -4,6 +4,7 @@ import { Container } from 'react-bootstrap'
 import {  useParams } from 'react-router-dom'
 import EditForm from './EditForm'
 import { ColorRing } from 'react-loader-spinner'
+import { Auth } from './Context/AuthContext'
 
 
 const EditMeeting = () => {
@@ -13,6 +14,8 @@ const EditMeeting = () => {
     const [meetingDetails,setMeetingDetails] = useState([])
 
     const [isLoading,setIsLoading] = useState(true)
+
+    const {token} = Auth()
     
 
     useEffect(() => {
@@ -21,7 +24,7 @@ const EditMeeting = () => {
   
     const fetchMeetingDetails = async () => {
 
-      const meeting =await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`)
+      const meeting =await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`,{ headers :{'Authorization' : `Bearer ${token}`}})
   
       const responseData = await meeting.json()
   

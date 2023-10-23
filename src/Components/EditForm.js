@@ -9,6 +9,7 @@ import _ from 'lodash'
 import { isEqual } from 'lodash'
 
 import { ColorRing } from 'react-loader-spinner'
+import { Auth } from './Context/AuthContext'
 
 const EditForm = ({meetingDetails}) => {
 
@@ -49,6 +50,8 @@ const EditForm = ({meetingDetails}) => {
   const [isSubmitting,setIsSubmitting] = useState(false)
 
   const [displayForm,setDisplayForm] = useState(true)
+
+  const {token} = Auth()
 
   
   const formik = useFormik({
@@ -99,7 +102,7 @@ const EditForm = ({meetingDetails}) => {
 
       const createMeeting =await  fetch(`http://localhost:5000/api/teacher/courseMeetings/${id}`, {
           method: "PATCH",
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json','Authorization' : `Bearer ${token}` },
           body : JSON.stringify(values)
         })
       

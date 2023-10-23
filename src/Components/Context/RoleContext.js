@@ -15,7 +15,7 @@ const RoleContext = ({children}) => {
     }
 
     return (
-        <RoleData.Provider value={{ teacherRole, studentRole, handleRole }}>
+        <RoleData.Provider value={{ teacherRole,setTeacherRole, studentRole, handleRole }}>
             {children}
         </RoleData.Provider>
     )

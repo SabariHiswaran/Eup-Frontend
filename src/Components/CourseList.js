@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import CourseTopic from './CourseTopic'
 import { Container } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
+import { Auth } from './Context/AuthContext'
 
 const CourseList = () => {
 
   const [courses, setCourses] = useState([])
 
   const [isLoading, setIsLoading] = useState(null)
+
+  const {token} = Auth()
 
   useEffect(() => {
 
@@ -19,7 +22,7 @@ const CourseList = () => {
 
     setIsLoading(true)
 
-    const courseData = await fetch("http://localhost:5000/api/teacher/courses")
+    const courseData = await fetch("http://localhost:5000/api/teacher/courses",{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const result = await courseData.json()
 

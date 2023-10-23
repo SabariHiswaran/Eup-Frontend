@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Auth } from '../Context/AuthContext'
 
 
 const UnEnrollMeeting = () => {
@@ -14,6 +15,8 @@ const UnEnrollMeeting = () => {
 
   const [isDeleted,setIsDeleted] = useState(null)
 
+  const {token} = Auth()
+  console.log(token)
   useEffect(() => {
 
       deleteStudent()
@@ -24,14 +27,19 @@ const UnEnrollMeeting = () => {
 
     setIsDeleted(true)
 
-    const deleteData = await fetch(`http://localhost:5000/api/student/courses/unenroll/${id}/${meetingId}`, {method : "DELETE"})
+    const deleteData = await fetch(`http://localhost:5000/api/student/courses/unenroll/${id}/${meetingId}`, 
+                                  {method : "DELETE", 
+                                  headers :{
+                                    'Authorization' : `Bearer ${token}`
+                                  }
+                                })
 
     const response = await deleteData.json()
 
     setIsDeleted(false)
 
   }
-  console.log(meetingId)
+  // console.log(meetingId)
   return (
 
     <Container>

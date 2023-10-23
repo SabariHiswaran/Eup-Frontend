@@ -21,6 +21,11 @@ import UnEnrollMeeting from './Components/Student/UnEnrollMeeting';
 import EnrolledMembers from './Components/EnrolledMembers';
 import SignupPage from './Components/SignupPage';
 import LogininPage from './Components/LogininPage';
+import { useEffect } from 'react';
+import { Auth } from './Components/Context/AuthContext';
+import { useState } from 'react';
+import { ColorRing } from 'react-loader-spinner';
+
 
 
 const teacherRouter = createBrowserRouter([
@@ -140,6 +145,14 @@ const studentRouter = createBrowserRouter([
     errorElement: <StudentErrorPage />
   },
   {
+    path : "/api/teacher",
+    element : <Header/>,
+    children : [ {
+      path : "/api/teacher",
+      element : <Homepage />
+    }]
+  },
+  {
 
     path: "/api/teacher/courses",
     element: <Header />,
@@ -201,16 +214,43 @@ const studentRouter = createBrowserRouter([
 
   },
 ])
+let logoutTimer;
 
 function App() {
 
   const { teacherRole } = Role()
 
+  const {isLoggedIn,token,login,logout,tokenExpiration} = Auth()
+
+  const [isCheckedAuth , setIsCheckedAuth] = useState(false)
+
+
+  useEffect(() => {
+     const storedData =  JSON.parse(localStorage.getItem("userData"))
+
+     if(storedData && storedData.token ){
+        login(storedData.userId, storedData.token )
+     }
+     setIsCheckedAuth(true)
+  },[login])
+
+  // useEffect(() => {
+
+  //   if(token && tokenExpiration){
+  //       logoutTimer = setTimeout(logout , new Date(tokenExpiration) - new Date() )
+  //   }
+  //   else{
+  //     clearTimeout(logoutTimer)
+  //   }
+
+  // },[token,logout])
 
   return (
- 
-      <RouterProvider router={teacherRole ? teacherRouter : studentRouter} />
-
+       isCheckedAuth ?
+      <RouterProvider router={ teacherRole ? teacherRouter : studentRouter } />
+      : 
+     " Re-Loading ...."
+     
 
   );
 }

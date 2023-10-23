@@ -2,6 +2,7 @@ import React from 'react'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 import './MeetingCards.css'
 import { Link } from 'react-router-dom'
+import { Auth } from './Context/AuthContext'
 
 const MeetingCards = ({meeting,updateDelete}) => {
 
@@ -22,13 +23,15 @@ const MeetingCards = ({meeting,updateDelete}) => {
   }  = meeting
 
 
+  const {token} = Auth()
+
   const handleDelete =async (meetingId) => {
 
       if(window.confirm("Are you sure you want to delete the meeting?")){
         
        updateDelete(meetingId)
 
-       const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`, { method: 'DELETE' })
+       const deleteRequest = await fetch(`http://localhost:5000/api/teacher/courseMeetings/${meetingId}`, { method: 'DELETE' , headers :{'Authorization' : `Bearer ${token}`}})
 
        const response =await deleteRequest.json()
 

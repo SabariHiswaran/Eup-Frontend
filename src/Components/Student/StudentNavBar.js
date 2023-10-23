@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Nav } from 'react-bootstrap';
+import { Button, Nav } from 'react-bootstrap';
 
 import './StudentNavBar.css'
 import { Link } from 'react-router-dom';
+import { Auth } from '../Context/AuthContext';
+import LogoutModeComponent from '../LogoutModelComponent';
 
 const StudentNavBar = () => {
+
+  const {isLoggedIn, logout} = Auth()
+
+  const [isLogout, setIsLogout] = useState(false)
+
+
+  const handleLogout = () => {
+    setIsLogout(true)
+  }
+
   return (
+    <>
     <Nav className="justify-content-center" activeKey="/home">
 
         <Nav.Item>
@@ -21,7 +34,23 @@ const StudentNavBar = () => {
           <Nav.Link as={Link} to="/api/student/courses/enrolledMeetings">Registered Meetings</Nav.Link>
         </Nav.Item>
 
+        {
+                isLoggedIn && 
+                <Button 
+                variant='danger'
+                onClick={handleLogout}> Logout </Button>
+        }
+
       </Nav>
+
+      
+{isLogout ?
+  <LogoutModeComponent isLogout = {isLogout} setIsLogout={ setIsLogout} />
+: 
+null 
+}
+
+</>
   )
 }
 

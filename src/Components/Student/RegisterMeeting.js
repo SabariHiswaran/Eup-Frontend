@@ -4,6 +4,7 @@ import { Button, Col, Container, Row } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { Link, useNavigate } from 'react-router-dom'
 import * as Yup from 'yup'
+import { Auth } from '../Context/AuthContext'
 
 const RegisterMeeting = ({ meeting }) => {
 
@@ -29,6 +30,7 @@ const RegisterMeeting = ({ meeting }) => {
 
     const [displayForm, setDisplayForm] = useState(true)
 
+    const {token,userId} = Auth()
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -39,7 +41,8 @@ const RegisterMeeting = ({ meeting }) => {
             managerEmailId: "",
             accountName: "",
             courseTopic: courseTopic,
-            topic: topic
+            topic: topic,
+            userId : userId
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Your name is required"),
@@ -51,7 +54,8 @@ const RegisterMeeting = ({ meeting }) => {
             accountName: Yup.string().when("empStatus", {
                 is: "Project",
                 then: () => Yup.string().required("Your Account Name is required")
-            })
+            }),
+            userId : Yup.string().required("Your login user id is required")
         }),
         onSubmit: async (values, { resetForm }) => {
 
@@ -75,12 +79,13 @@ const RegisterMeeting = ({ meeting }) => {
                 accountName: values.accountName,
                 courseTopic: courseTopic,
                 topic: topic,
-                meetingId: id
+                meetingId: id,
+                userId : userId
             }
 
             const addParticipant = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${id}`, {
                 method: "POST",
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json','Authorization' : `Bearer ${token}` },
                 body: JSON.stringify(newVal)
             })
 

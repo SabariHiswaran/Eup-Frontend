@@ -3,6 +3,7 @@ import { Container } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import StudentSubTopic from './StudentSubTopic'
 import { ColorRing } from 'react-loader-spinner'
+import { Auth } from '../Context/AuthContext'
 
 const StudentSubTopicList = () => {
 
@@ -11,6 +12,8 @@ const StudentSubTopicList = () => {
   const [subTopics, setSubTopics] = useState([])
   
   const [isLoading,setIsLoading] = useState(null)
+
+  const {token} = Auth()
 
   useEffect(() => {
 
@@ -22,7 +25,7 @@ const StudentSubTopicList = () => {
 
     setIsLoading(true)
 
-    const subTopicsData = await fetch("http://localhost:5000/api/student/courses")
+    const subTopicsData = await fetch("http://localhost:5000/api/student/courses",{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const result = await subTopicsData.json()
 

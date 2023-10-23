@@ -6,6 +6,7 @@ import { ColorRing } from 'react-loader-spinner'
 import MeetingShimmer from './MeetingShimmer'
 import { Link } from 'react-router-dom'
 import ModeComponent from './ModeComponent'
+import { Auth } from '../Context/AuthContext'
 
 const EnrolledMeetings = ({ meeting }) => {
 
@@ -14,6 +15,10 @@ const EnrolledMeetings = ({ meeting }) => {
   const [courseDetails,setCourseDetails] = useState({})
 
   const [unEnroll,setUnenroll] = useState(false)
+
+
+
+  const {token} = Auth()
 
   const {
     id,
@@ -42,9 +47,11 @@ const EnrolledMeetings = ({ meeting }) => {
 
   const mailId = Object.keys(supervisorId)[0]
 
+
   useEffect(() => {
 
       fetchCourseDetails()
+
 
   },[])
 
@@ -53,7 +60,7 @@ const EnrolledMeetings = ({ meeting }) => {
   
     setIsLoading(true)
 
-    const courseDetails = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${meetingId}`)
+    const courseDetails = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${meetingId}`,{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const responseData = await courseDetails.json()
 
@@ -63,6 +70,7 @@ const EnrolledMeetings = ({ meeting }) => {
 
   }
 
+
   console.log(courseDetails)
 
   const hanldeUnRegister = () => {
@@ -71,7 +79,7 @@ const EnrolledMeetings = ({ meeting }) => {
 
   return (
     <>
-       <Card style={{ width: '23rem' }}>
+       <Card style={{ width: '23rem', marginLeft : "30px" }}>
     {isLoading ?
       <Container className='d-flex justify-content-center'>
           {/* <ColorRing

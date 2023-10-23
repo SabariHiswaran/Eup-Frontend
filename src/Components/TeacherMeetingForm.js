@@ -8,6 +8,7 @@ import './TeacherMeetingForm.css'
 import Prompt from './Prompt'
 import { useNavigate } from 'react-router-dom'
 import { ColorRing } from 'react-loader-spinner'
+import { Auth } from './Context/AuthContext'
 
 const TeacherMeetingForm = () => {
 
@@ -18,6 +19,9 @@ const TeacherMeetingForm = () => {
   const [isSubmitting,setIsSubmitting] = useState(false)
 
   const [displayForm,setDisplayForm] = useState(true)
+
+  const {token,userId} = Auth()
+
 
   const today = new Date();
   const yyyy = today.getFullYear();
@@ -49,7 +53,8 @@ const TeacherMeetingForm = () => {
       name: "",
       designation: "",
       experience: "",         //convert to number
-      knowledgeRequired: ""
+      knowledgeRequired: "",
+      userId : userId
     },
     validationSchema: Yup.object({
       courseTopic: Yup.string().required("Course Topic is required"),
@@ -69,18 +74,18 @@ const TeacherMeetingForm = () => {
       name: Yup.string().required("Your name is required"),
       designation: Yup.string().required("Your designation is required"),
       experience: Yup.number().required("Your total number of years is required"),
-      knowledgeRequired: Yup.string().required("Pre-requistees skill is required")
-
+      knowledgeRequired: Yup.string().required("Pre-requistees skill is required"),
+      userId : Yup.string().required("Your login user id is required")
     }),
     onSubmit:async (values,{resetForm}) => {
-
+      console.log(values.userId)
       setDisplayForm(false)
 
       setIsSubmitting(true)
 
       const createMeeting =await  fetch("http://localhost:5000/api/teacher/courses/createMeeting", {
           method: "POST",
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' ,'Authorization' : `Bearer ${token}` },
           body : JSON.stringify(values)
         })
       

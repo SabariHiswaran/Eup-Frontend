@@ -1,6 +1,9 @@
 
 
 import React, {   createContext, useContext, useState } from 'react'
+import { useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { Role } from './RoleContext'
 
 const AuthContext = createContext()
 
@@ -12,15 +15,22 @@ const AuthContextComponent = ({children}) => {
 
   const [userId, setUserId] = useState(false)
 
-  const login = (userId,token) => {
+
+
+  const login = useCallback( (userId,token) => {
     setToken(token)
     setUserId(userId)
-  }
+    localStorage.setItem("userData", JSON.stringify(
+      {userId : userId ,
+         token : token,
+         }))
+  },[])
 
-  const logout = () => {
+  const logout =useCallback( () => {
     setToken(null)
     setUserId(null)
-  }
+    localStorage.removeItem("userData")
+  },[])
 
 
     return (
@@ -29,7 +39,7 @@ const AuthContextComponent = ({children}) => {
             token : token,
             userId : userId,
             login : login,
-            logout : logout
+            logout : logout,
           }}>
             {children}
         </AuthContext.Provider>

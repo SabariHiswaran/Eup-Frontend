@@ -2,12 +2,15 @@ import React, { useEffect,useState } from 'react'
 import { Container } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import EnrolledMeetingCards from './EnrolledMeetingCards'
+import { Auth } from './Context/AuthContext'
 
 const EnrolledMembers = () => {
 
   const [courseMeeting,setCourseMeeting] = useState([])
 
   const [isLoading,setIsLoading] = useState(null)
+  
+  const {token} = Auth()
 
   useEffect(() => {
       fetchMeetingDetails()
@@ -17,7 +20,7 @@ const EnrolledMembers = () => {
 
     setIsLoading(true)
 
-    const meetingDetails =await fetch("http://localhost:5000/api/teacher/courseMeetings")
+    const meetingDetails =await fetch("http://localhost:5000/api/teacher/courseMeetings",{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const responseData = await meetingDetails.json()
 

@@ -5,6 +5,7 @@ import { Button, Col, Container, Row, Table } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
 import { Link } from 'react-router-dom'
 import EnrolledMemberTable from './EnrolledMemberTable'
+import { Auth } from './Context/AuthContext'
 
 const EnrolledMeetingCards = ({ meeting }) => {
 
@@ -24,6 +25,8 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
     const [isLoading, setIsLoading] = useState(null)
 
+    const {token} = Auth()
+
     useEffect(() => {
 
         fetchEnrolledMembers()
@@ -34,7 +37,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
         setIsLoading(true)
 
-        const members = await fetch(`http://localhost:5000/api/teacher/courses/enrolledMembers/${id}`)
+        const members = await fetch(`http://localhost:5000/api/teacher/courses/enrolledMembers/${id}`,{ headers :{'Authorization' : `Bearer ${token}`}})
 
         const responseData = await members.json()
 
@@ -44,9 +47,13 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
     }
 
+    
+
+  const checkLimit = members?.length === membersLimit ? "(Limit reached)" : ""
+
     console.log(members)
     return (
-        <Container className=' border-bottom border-dark '>
+        <Container className=' border-bottom border-dark mt-3'>
 
             <Row>
 
@@ -54,7 +61,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
                 <Col lg={11} md={11} sm={12}>
 
-                    <h5 className='p-2'> {topic}  ({courseTopic})  </h5>
+                    <h5 > {topic}  ({courseTopic})  </h5>
 
                     <Table bordered hover>
                         <tbody>
@@ -74,13 +81,13 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
             </Row>
 
-            <Row>
+            <Row className='p-5'>
 
                 <Col lg={1} md={1} sm={0}> </Col>
 
                 <Col lg={11} md={11} sm={12}>
 
-                    <h5 className='p-2'> Registered Members : </h5>
+                    <h5 className='p-2'> Registered Members : {checkLimit} </h5>
 
                     {isLoading ?
                         <Container className='d-flex justify-content-center'>
@@ -105,8 +112,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
 
                         </Container>
                             :
-                            null
-                    }
+                   
 
                     <Container>
 
@@ -129,7 +135,7 @@ const EnrolledMeetingCards = ({ meeting }) => {
                             </tbody>
                         </Table>
                     </Container>
-
+}
 
                 </Col>
             </Row>
