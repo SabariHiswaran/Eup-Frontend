@@ -63,7 +63,7 @@ const EnrolledMeetings = ({ meeting }) => {
     const courseDetails = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${meetingId}`,{ headers :{'Authorization' : `Bearer ${token}`}})
 
     const responseData = await courseDetails.json()
-
+console.log(responseData)
     setCourseDetails(responseData.meeting)
 
     setIsLoading(false)

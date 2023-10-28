@@ -1,17 +1,16 @@
 import React, { useEffect,useState } from 'react'
-import { Container } from 'react-bootstrap'
-import MeetingCards from './MeetingCards'
+import { Container, ListGroup } from 'react-bootstrap'
 import { ColorRing } from 'react-loader-spinner'
+import EnrolledMeetingCards from './EnrolledMeetingCards'
 import { Auth } from './Context/AuthContext'
+import MeetingsBadgePage from './MeetingsBadgePage'
 
-const MeetingsList = () => {
+const BadgePage = () => {
 
   const [courseMeeting,setCourseMeeting] = useState([])
 
-  const [completedMeeting,setCompletedMeeting]  = useState([])
-
   const [isLoading,setIsLoading] = useState(null)
-
+  
   const {token} = Auth()
 
   useEffect(() => {
@@ -26,25 +25,26 @@ const MeetingsList = () => {
 
     const responseData = await meetingDetails.json()
 
-    setCourseMeeting(responseData.courseMeetings.filter(meeting => meeting.status !== "Completed" ))
-
-    setCompletedMeeting(responseData.courseMeetings.filter(meeting => meeting.status === "Completed" ))
+    setCourseMeeting(responseData.courseMeetings.filter(meeting => meeting.status === "Completed" ))
 
     setIsLoading(false)
   }
-
-  const updateDelete = (deleteMeetingId) => {
-
-    const updatedMeetingList = courseMeeting.filter(meeting => meeting.id !== deleteMeetingId)
-
-    setCourseMeeting(updatedMeetingList)
-  }
-
+console.log(courseMeeting)
   return(
     <>
 
     <Container>
-     <h4 className='mx-4 px-5 mt-4'> Upcoming Meetings List </h4>
+     <h4 className='mx-4 px-5 mt-4'> Badges</h4>
+     <p className='mx-4 px-5 mt-4'><span style={{fontWeight : "bold"}}> Note :</span> Completed Trainings will be listed below. You can choose upto 5 students in each meeting and
+       can award the Badges. Based on the Badges winnercircle points will be awarded as below.</p>
+       <span  className='mx-4 px-5 mt-4'> WCP - Winner Circle Points </span>
+       <ListGroup className='mx-4 px-5 mt-4'>
+      <ListGroup.Item>Iron Badge - 50 WCP </ListGroup.Item>
+      <ListGroup.Item>Bronze Badge - 100 WCP </ListGroup.Item>
+      <ListGroup.Item>Silver Badge - 200 WCP </ListGroup.Item>
+      <ListGroup.Item>Gold Badge - 300 WCP </ListGroup.Item>
+      <ListGroup.Item>Diamond Badge - 500 WCP </ListGroup.Item>
+    </ListGroup>
     { isLoading ? 
     <Container className='d-flex justify-content-center'>
      <ColorRing
@@ -64,7 +64,7 @@ const MeetingsList = () => {
      {
      isLoading === false && courseMeeting.length === 0 ?<Container className='d-flex justify-content-center'>
     
-     <h4 className='mx-4 px-5 mt-4'> Currently there is no upcoming meetings for you. </h4>
+     <h4 className='mx-4 px-5 mt-4'> Currently there is no completed trainings. </h4>
 
      </Container> 
      : 
@@ -79,39 +79,15 @@ const MeetingsList = () => {
       <Container className='p-5'>
       {courseMeeting?.map((meeting) => {
         return(
-          <MeetingCards meeting = {meeting} key={meeting.id} updateDelete={updateDelete}/>
+          <MeetingsBadgePage meeting = {meeting} key={meeting.id} />
         )
       })}
 
       </Container>
-
-
-      <h4 className='mx-4 px-5 mt-4'> Completed Meetings List </h4>
-
-
- <Container className='p-5'>
-      {completedMeeting?.map((meeting) => {
-        return(
-          <MeetingCards meeting = {meeting} key={meeting.id} completed = {true} />
-        )
-      })}
-
-      </Container>
-
-      {
-     isLoading === false && completedMeeting.length === 0 ?<Container className='d-flex justify-content-center'>
-    
-     <h4 className='mx-4 px-5 mt-4'> Currently there is no completed trainings. </h4>
-
-     </Container> 
-     : 
-     null 
-      }
-
 
     </Container>
     </>
   )
 }
 
-export default MeetingsList
+export default BadgePage

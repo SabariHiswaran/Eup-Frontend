@@ -43,11 +43,11 @@ const TeacherNavBar = () => {
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link eventKey="link-4">Rewards</Nav.Link>
+          <Nav.Link as={Link} to="/api/teacher/courses/rewards">Rewards</Nav.Link>
         </Nav.Item>
 
         <Nav.Item>
-          <Nav.Link eventKey="link-5">Badge</Nav.Link>
+          <Nav.Link as={Link} to="/api/teacher/courses/badges">Badge</Nav.Link>
         </Nav.Item>
         {
                 isLoggedIn && 

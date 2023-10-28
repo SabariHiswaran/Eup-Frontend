@@ -54,7 +54,8 @@ const TeacherMeetingForm = () => {
       designation: "",
       experience: "",         //convert to number
       knowledgeRequired: "",
-      userId : userId
+      userId : userId,
+      status : "Not Completed"
     },
     validationSchema: Yup.object({
       courseTopic: Yup.string().required("Course Topic is required"),
@@ -75,7 +76,8 @@ const TeacherMeetingForm = () => {
       designation: Yup.string().required("Your designation is required"),
       experience: Yup.number().required("Your total number of years is required"),
       knowledgeRequired: Yup.string().required("Pre-requistees skill is required"),
-      userId : Yup.string().required("Your login user id is required")
+      userId : Yup.string().required("Your login user id is required"),
+      status : Yup.string().required("Training status is required")
     }),
     onSubmit:async (values,{resetForm}) => {
       console.log(values.userId)

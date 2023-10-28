@@ -25,6 +25,9 @@ import { useEffect } from 'react';
 import { Auth } from './Components/Context/AuthContext';
 import { useState } from 'react';
 import { ColorRing } from 'react-loader-spinner';
+import UpdateMeetingStatus from './Components/UpdateMeetingStatus';
+import RewardsPage from './Components/RewardsPage';
+import BadgePage from './Components/BadgePage';
 
 
 
@@ -72,12 +75,24 @@ const teacherRouter = createBrowserRouter([
           element: <MeetingsList />
         },
         {
+        path:"/api/teacher/courses/upcomingMeetings/status/:id",
+        element : <UpdateMeetingStatus/>
+        },
+        {
           path: "/api/teacher/courses/upcomingMeetings/editMeeting/:meetingId",
           element: <EditMeeting />
         },
         {
           path: "/api/teacher/courses/enrolledMembers",
           element: <EnrolledMembers />
+        },
+        {
+          path: "/api/teacher/courses/rewards",
+          element: <RewardsPage />
+        },
+        {
+          path: "/api/teacher/courses/badges",
+          element : <BadgePage/>
         }
       ],
     errorElement: <ErrorPage />
