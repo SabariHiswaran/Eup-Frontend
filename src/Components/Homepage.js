@@ -30,6 +30,10 @@ const fetchMeetingDetails = async () => {
 
 }
 
+  const upcomingCourseMeeting = courseMeeting?.filter(meeting => meeting.status !== "Completed" )
+
+  const completedCourseMeeting = courseMeeting?.filter(meeting => meeting.status === "Completed" )
+
   return (
     <>
     <Container className=' d-flex justify-content-center' >
@@ -88,14 +92,14 @@ const fetchMeetingDetails = async () => {
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'> Upcoming Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : courseMeeting?.length}</ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : upcomingCourseMeeting?.length}</ListGroup.Item>
       </ListGroup>
     </Card>
 
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'>Completed Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'> 0 </ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : completedCourseMeeting?.length}  </ListGroup.Item>
       </ListGroup>
     </Card>
     </Card>

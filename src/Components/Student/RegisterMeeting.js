@@ -42,7 +42,8 @@ const RegisterMeeting = ({ meeting }) => {
             accountName: "",
             courseTopic: courseTopic,
             topic: topic,
-            userId : userId
+            userId : userId,
+            badge : "Not Awarded"
         },
         validationSchema: Yup.object({
             name: Yup.string().required("Your name is required"),
@@ -55,7 +56,8 @@ const RegisterMeeting = ({ meeting }) => {
                 is: "Project",
                 then: () => Yup.string().required("Your Account Name is required")
             }),
-            userId : Yup.string().required("Your login user id is required")
+            userId : Yup.string().required("Your login user id is required"),
+            badge : Yup.string().required("Badge Status is required")
         }),
         onSubmit: async (values, { resetForm }) => {
 
@@ -80,7 +82,8 @@ const RegisterMeeting = ({ meeting }) => {
                 courseTopic: courseTopic,
                 topic: topic,
                 meetingId: id,
-                userId : userId
+                userId : userId,
+                badge : "Not Awarded"
             }
 
             const addParticipant = await fetch(`http://localhost:5000/api/student/courses/${courseTopic}/${topic}/register/${id}`, {

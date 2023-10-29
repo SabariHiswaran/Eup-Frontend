@@ -2,17 +2,20 @@ import React, { useState } from 'react'
 import { Button, Container, Dropdown, DropdownButton, Modal, Table } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import ViewModelComponent from './ViewModelComponent'
+import { ColorRing } from 'react-loader-spinner'
+import { Auth } from './Context/AuthContext'
 
 const BadgePageTable = ({ memberDetails, tableId }) => {
 
 
     const { id, name, accountName } = memberDetails
 
+
     const moreMemberDetails = memberDetails
 
     delete moreMemberDetails._id
     delete moreMemberDetails.__v
-    delete moreMemberDetails.id
+    // delete moreMemberDetails.id
     delete moreMemberDetails.userId
     delete moreMemberDetails.meetingId
 
@@ -24,7 +27,17 @@ const BadgePageTable = ({ memberDetails, tableId }) => {
 
     const [badgeShow, setBadgeShow] = useState(false);
 
-    const [selectedBadge,setSelectedBadge] = useState("Please Select the Badge")
+    const [selectedBadge, setSelectedBadge] = useState("Iron")
+
+    const [updateBadgeButton, setUpdateBadgeButton] = useState("Award Badge")
+
+    const [loading, setLoading] = useState(false)
+
+    const [status, setStatus] = useState(null)
+
+    const [memberId] = useState(id)
+
+    const { token } = Auth()
 
     const handleClose = () => {
         setShow(false);
@@ -33,10 +46,35 @@ const BadgePageTable = ({ memberDetails, tableId }) => {
 
     const handleBadgeClose = () => {
         setBadgeShow(false);
+        setLoading(false)
+        setStatus(null)
     }
 
     const handleSelect = (e) => {
         setSelectedBadge(e)
+    }
+
+    const handleBadgeSubmit = async () => {
+        console.log("final user ID", id)
+        // console.log("id is ",memberId)
+        setLoading(true)
+        const updatingBadge = await fetch(`http://localhost:5000/api/teacher/courses/updateBadge/${id}`, {
+            method: "PATCH",
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ "badge": selectedBadge })
+        })
+
+
+        const res = await updatingBadge.json()
+
+        if (res.status === 200) {
+            setUpdateBadgeButton("Badge Awarded")
+            setStatus(true)
+        } else {
+            setUpdateBadgeButton("Award Badge")
+            setStatus(false)
+        }
+        setLoading(false)
     }
 
     console.log(selectedBadge)
@@ -89,30 +127,58 @@ const BadgePageTable = ({ memberDetails, tableId }) => {
                 </Modal.Header>
                 <Modal.Body className='pb-5'>
 
-                   
+                    {loading ?
+                        <ColorRing
+                            visible={true}
+                            height="80"
+                            width="80"
+                            ariaLabel="blocks-loading"
+                            wrapperStyle={{}}
+                            wrapperClass="blocks-wrapper"
+                            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+                        />
 
-                    <Dropdown> 
-                       
 
-                        <DropdownButton title={selectedBadge} key="Danger" onSelect={handleSelect}>
-                            <Dropdown.Item eventKey="Iron">Iron Badge - 50 WCP</Dropdown.Item>
-                            <Dropdown.Item eventKey="Bronze">Bronze Badge - 100 WCP</Dropdown.Item>
-                            <Dropdown.Item eventKey="Silver">Silver Badge - 200 WCP</Dropdown.Item>
-                            <Dropdown.Item eventKey="Gold">Gold Badge - 300 WCP</Dropdown.Item>
-                            <Dropdown.Item eventKey="Diamond">Diamond Badge - 500 WCP</Dropdown.Item>
-                            
-                        </DropdownButton>
-                    </Dropdown>
+                        :
+                        null
+                    }
+
+                    {!loading && status === null ?
+                        <Dropdown>
+
+
+                            <DropdownButton title={selectedBadge} key="Danger" onSelect={handleSelect}>
+                                <Dropdown.Item eventKey="Iron">Iron Badge - 50 WCP</Dropdown.Item>
+                                <Dropdown.Item eventKey="Bronze">Bronze Badge - 100 WCP</Dropdown.Item>
+                                <Dropdown.Item eventKey="Silver">Silver Badge - 200 WCP</Dropdown.Item>
+                                <Dropdown.Item eventKey="Gold">Gold Badge - 300 WCP</Dropdown.Item>
+                                <Dropdown.Item eventKey="Diamond">Diamond Badge - 500 WCP</Dropdown.Item>
+
+                            </DropdownButton>
+                        </Dropdown>
+
+                        : null}
+
+                    {!loading & status === true ? "You have successfully provided the Badge" : null
+                    }
+
+                    {!loading & status === false ? "Something went wrong, please try again after sometime" : null}
 
 
                 </Modal.Body>
                 <Modal.Footer>
-                <Button variant="primary" as={Link} to={"/api/teacher/courses/badges"} onClick={handleBadgeClose}>
-                        Submit 
-                    </Button>
-                    <Button variant="primary" as={Link} to={"/api/teacher/courses/badges"} onClick={handleBadgeClose}>
+                    {!loading & status === true ? <Button variant="primary" as={Link} to={"/api/teacher/courses/badges"} onClick={handleBadgeClose}>
                         Close
-                    </Button>
+                    </Button> :
+                        <>
+                            <Button variant="primary" as={Link} to={"/api/teacher/courses/badges"} onClick={() => handleBadgeSubmit()}>
+                                Submit
+                            </Button>
+                            <Button variant="primary" as={Link} to={"/api/teacher/courses/badges"} onClick={handleBadgeClose}>
+                                Cancel
+                            </Button>
+                        </>
+                    }
                 </Modal.Footer>
             </Modal>
 

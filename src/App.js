@@ -97,6 +97,72 @@ const teacherRouter = createBrowserRouter([
       ],
     errorElement: <ErrorPage />
 
+  },
+  {
+
+    path: "/api/student",
+    element: <Header/>,
+    children : [{
+      path: "/api/student",
+      element: <Homepage />
+    }]
+
+  },
+  {
+
+    path: "/api/student/courses",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses",
+      element: <Homepage />
+    }]
+
+  },
+  {
+    path: "/api/student/courses/enrolledMeetings",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/enrolledMeetings",
+      element: <Homepage />
+    }]
+  },
+  {
+    path: "/api/student/courses/enrolledMeetings/unregister/:id/:meetingId",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/enrolledMeetings/unregister/:id/:meetingId",
+      element: <Homepage />
+    }]
+  },
+  {
+
+    path: "/api/student/courses/:courseTopic",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/:courseTopic",
+      element: <Homepage />
+    }]
+
+  },
+  {
+
+    path: "/api/student/courses/:courseTopic/:topic/upcomingMeetings",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/:courseTopic/:topic/upcomingMeetings",
+      element: <Homepage />
+    }]
+
+  },
+  {
+
+    path: "/api/student/courses/:courseTopic/:topic/upcomingMeetings/register/:meetingId",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/:courseTopic/:topic/upcomingMeetings/register/:meetingId",
+      element: <Homepage />
+    }]
+
   }
 
 ])
@@ -164,7 +230,7 @@ const studentRouter = createBrowserRouter([
     element : <Header/>,
     children : [ {
       path : "/api/teacher",
-      element : <Homepage />
+      element : <StudentHomepage />
     }]
   },
   {

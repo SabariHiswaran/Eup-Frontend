@@ -49,7 +49,7 @@ const MeetingsBadgePage = ({ meeting }) => {
     }
 
     
-
+// console.log(members)
   const checkLimit = members?.length === membersLimit ? "(Limit reached)" : ""
 
     console.log(members)
