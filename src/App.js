@@ -28,6 +28,9 @@ import { ColorRing } from 'react-loader-spinner';
 import UpdateMeetingStatus from './Components/UpdateMeetingStatus';
 import RewardsPage from './Components/RewardsPage';
 import BadgePage from './Components/BadgePage';
+import StudentBadgePage from './Components/Student/StudentBadgePage';
+import StudentFeedbackPage from './Components/Student/StudentFeedbackPage';
+import MeetingFeedback from './Components/Student/MeetingFeedback';
 
 
 
@@ -163,7 +166,32 @@ const teacherRouter = createBrowserRouter([
       element: <Homepage />
     }]
 
-  }
+  }, 
+   {
+    path: "/api/student/courses/badges",
+    element: <Header/>,
+    children : [{
+      path: "/api/student/courses/badges",
+      element: <Homepage />
+    }]
+  },
+
+    {
+      path: "/api/student/courses/feedback",
+      element: <Header/>,
+      children : [{
+        path: "/api/student/courses/feedback",
+        element: <Homepage />
+      }]
+    },
+    {
+      path: "/api/student/courses/feedback/:id/:meetingId/:feedbackNumber",
+      element: <Header/>,
+      children : [{
+        path: "/api/student/courses/feedback/:id/:meetingId/:feedbackNumber",
+        element: <Homepage />
+      }]
+    },
 
 ])
 
@@ -220,6 +248,20 @@ const studentRouter = createBrowserRouter([
           element: <SelectedMeeting />
 
         },
+        {
+          path: "/api/student/courses/badges",
+          element : <StudentBadgePage/>
+        },
+      
+          {
+            path: "/api/student/courses/feedback",
+            element : <StudentFeedbackPage />
+          },
+          {
+            path: "/api/student/courses/feedback/:id/:meetingId/:feedbackNumber",
+            element : <MeetingFeedback />
+          }
+        
 
       ],
 

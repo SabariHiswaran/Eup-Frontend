@@ -8,8 +8,8 @@ import { Auth } from './Context/AuthContext'
 const BadgePageTable = ({ memberDetails, tableId }) => {
 
 
-    const { id, name, accountName } = memberDetails
-
+    const { id, name, accountName , badge } = memberDetails
+console.log(badge)
 
     const moreMemberDetails = memberDetails
 
@@ -92,7 +92,9 @@ const BadgePageTable = ({ memberDetails, tableId }) => {
                 }}> View </Button></td>
                 <td> <Button as={Link} onClick={() => {
                     setBadgeShow(true)
-                }}> Award Badge  </Button></td>
+                }}  variant={badge !== "Not Awarded"  ? "secondary" : "danger"}
+                > 
+                {badge !== "Not Awarded" ? "Badge Awarded" +"-" + badge : "Award Badge"} </Button></td>
 
             </tr>
 

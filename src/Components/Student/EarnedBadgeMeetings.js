@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Card, Container } from 'react-bootstrap'
+import { Badge, Button, Card, Container } from 'react-bootstrap'
 
 import "./EnrolledMeetings.css"
-import { ColorRing } from 'react-loader-spinner'
 import MeetingShimmer from './MeetingShimmer'
-import { Link } from 'react-router-dom'
-import ModeComponent from './ModeComponent'
 import { Auth } from '../Context/AuthContext'
 
-const EnrolledMeetings = ({ meeting }) => {
+const EarnedBadgeMeetings = ({ meeting }) => {
 
   const [isLoading,setIsLoading] = useState(null)
 
   const [courseDetails,setCourseDetails] = useState({})
-
-  const [unEnroll,setUnenroll] = useState(false)
 
 
 
@@ -31,7 +26,8 @@ const EnrolledMeetings = ({ meeting }) => {
     accountName,
     courseTopic,
     topic,
-    meetingId
+    meetingId,
+    badge
   } = meeting
 
   const {
@@ -42,8 +38,7 @@ const EnrolledMeetings = ({ meeting }) => {
     startTime,
     endTime,
     totalDays,           
-    knowledgeRequired,
-    status
+    knowledgeRequired
   }  = courseDetails
 
   const mailId = Object.keys(supervisorId)[0]
@@ -72,26 +67,16 @@ console.log(responseData)
   }
 
 
-  console.log(courseDetails)
-
-  const hanldeUnRegister = () => {
-    setUnenroll(true)
-  }
 
   return (
     <>
-       <Card style={{ width: '23rem', marginLeft : "30px" }}>
+       <Card style={{ width: '23rem', marginLeft : "30px" }} >
+        <h5>
+       <Badge bg="success">{badge}</Badge>
+       </h5>
     {isLoading ?
       <Container className='d-flex justify-content-center'>
-          {/* <ColorRing
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          /> */}
+        
           <MeetingShimmer/>
 
       </Container>
@@ -113,22 +98,15 @@ console.log(responseData)
           <p className='m-0'> <span className="meetingDetailsHeading">Status :</span> - {empStatus} </p>
           <p className='m-0'> {name} | {designation} | {experience} years  </p>
         </Card.Text>
-        <Button variant={status === "Completed" ? "secondary" : "danger" } onClick={status === "Completed" ? null : hanldeUnRegister }>{status === "Completed" ? "Training Completed" : "Unregister" }</Button>
         
       </Card.Body>
       
       } 
     </Card>
 
-    {
-      unEnroll 
-      ? 
-      <ModeComponent id={id} meetingId={meetingId} unEnroll = {unEnroll} setUnenroll={setUnenroll} />
-      :
-      null
-    }
+  
     </>
   )
 }
 
-export default EnrolledMeetings
+export default EarnedBadgeMeetings

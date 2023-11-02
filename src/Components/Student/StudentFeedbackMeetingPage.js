@@ -7,28 +7,21 @@ import MeetingShimmer from './MeetingShimmer'
 import { Link } from 'react-router-dom'
 import ModeComponent from './ModeComponent'
 import { Auth } from '../Context/AuthContext'
+import FeedbackModeComponent from './FeedbackModelComponent'
 
-const EnrolledMeetings = ({ meeting }) => {
+const StudentFeedbackMeetingPage = ({ meeting }) => {
 
   const [isLoading,setIsLoading] = useState(null)
 
   const [courseDetails,setCourseDetails] = useState({})
 
-  const [unEnroll,setUnenroll] = useState(false)
-
+    const [provideFeedback,setProvideFeedback] = useState(false)
 
 
   const {token} = Auth()
 
   const {
     id,
-    name,
-    designation,
-    experience,
-    empStatus,
-    emailId,
-    supervisorId,
-    accountName,
     courseTopic,
     topic,
     meetingId
@@ -43,11 +36,10 @@ const EnrolledMeetings = ({ meeting }) => {
     endTime,
     totalDays,           
     knowledgeRequired,
-    status
+    status,
+    feedback
   }  = courseDetails
-
-  const mailId = Object.keys(supervisorId)[0]
-
+  const {userId} = Auth()
 
   useEffect(() => {
 
@@ -75,23 +67,21 @@ console.log(responseData)
   console.log(courseDetails)
 
   const hanldeUnRegister = () => {
-    setUnenroll(true)
+    setProvideFeedback(true)
   }
 
+  const matchingUserFeedback = feedback?.filter(feedback => {
+    console.log(feedback.userId, userId)
+
+
+    return     feedback.userId === userId
+  })
+console.log("martching" , matchingUserFeedback)
   return (
     <>
        <Card style={{ width: '23rem', marginLeft : "30px" }}>
     {isLoading ?
       <Container className='d-flex justify-content-center'>
-          {/* <ColorRing
-              visible={true}
-              height="80"
-              width="80"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-          /> */}
           <MeetingShimmer/>
 
       </Container>
@@ -107,23 +97,24 @@ console.log(responseData)
         <p className='m-0'> <span className="meetingDetailsHeading">Pre-requistees required </span>- {knowledgeRequired} </p>
         <p className='m-0'> {courseDetails.name} | {courseDetails.designation} | {courseDetails.experience} years  </p> 
         <hr/>
-          <p  className='statusHeading'> <span className="meetingDetailsHeading">Mail Id: </span>- {emailId} </p>
-          <p className='m-0'> <span className="meetingDetailsHeading">Supervisor Id: </span>-{supervisorId[mailId]} </p>
-          <p className='m-0'> <span className="meetingDetailsHeading">Account Name :  </span>- {accountName} </p>
-          <p className='m-0'> <span className="meetingDetailsHeading">Status :</span> - {empStatus} </p>
-          <p className='m-0'> {name} | {designation} | {experience} years  </p>
-        </Card.Text>
-        <Button variant={status === "Completed" ? "secondary" : "danger" } onClick={status === "Completed" ? null : hanldeUnRegister }>{status === "Completed" ? "Training Completed" : "Unregister" }</Button>
         
+        </Card.Text>
+
+        {matchingUserFeedback?.length === 0 ?
+        <Button variant = {courseDetails.status !== "Completed" ? "secondary" : "danger"} onClick={ hanldeUnRegister } disabled =  {courseDetails.status !== "Completed" ? true : false}> {courseDetails.status !== "Completed" ? "Training Not yet Completed" : "Provide Feedback"} </Button>
+        : 
+        <Button variant='secondary' disabled= {true} > Feedback Provided Already </Button>         
+
+}
       </Card.Body>
       
       } 
     </Card>
 
     {
-      unEnroll 
+      provideFeedback 
       ? 
-      <ModeComponent id={id} meetingId={meetingId} unEnroll = {unEnroll} setUnenroll={setUnenroll} />
+      <FeedbackModeComponent id={userId} meetingId={meetingId} provideFeedback = {provideFeedback} setProvideFeedback = {setProvideFeedback} />
       :
       null
     }
@@ -131,4 +122,4 @@ console.log(responseData)
   )
 }
 
-export default EnrolledMeetings
+export default StudentFeedbackMeetingPage

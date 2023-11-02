@@ -34,6 +34,14 @@ const StudentNavBar = () => {
           <Nav.Link as={Link} to="/api/student/courses/enrolledMeetings">Registered Meetings</Nav.Link>
         </Nav.Item>
 
+        <Nav.Item>
+          <Nav.Link as={Link} to="/api/student/courses/badges">Earned Rewards </Nav.Link>
+        </Nav.Item>
+
+        <Nav.Item>
+          <Nav.Link as={Link} to="/api/student/courses/feedback">Feedback</Nav.Link>
+        </Nav.Item>
+
         {
                 isLoggedIn && 
                 <Button 
