@@ -14,6 +14,8 @@ const Homepage = () => {
 
   const [courseMeeting,setCourseMeeting] = useState([])
 
+  const [isLoading,setIsLoading] = useState(false)
+
   const {token} = Auth()
   
   useEffect(() => {
@@ -22,12 +24,14 @@ const Homepage = () => {
 
 const fetchMeetingDetails = async () => {
 
+  setIsLoading(true)
+
   const meetingDetails =await fetch("http://localhost:5000/api/teacher/courseMeetings",{ headers :{'Authorization' : `Bearer ${token}`}})
 
   const responseData = await meetingDetails.json()
   console.log(responseData)
   setCourseMeeting(responseData.courseMeetings)
-
+  setIsLoading(false)
 }
 
   const upcomingCourseMeeting = courseMeeting?.filter(meeting => meeting.status !== "Completed" )
@@ -85,21 +89,21 @@ const fetchMeetingDetails = async () => {
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'>Overall Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : courseMeeting?.length}</ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{isLoading ? "Loading..." : courseMeeting?.length}</ListGroup.Item>
       </ListGroup>
     </Card>
 
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'> Upcoming Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : upcomingCourseMeeting?.length}</ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{isLoading? "Loading..." : upcomingCourseMeeting?.length}</ListGroup.Item>
       </ListGroup>
     </Card>
 
     <Card style={{ width: '18rem' }}>
       <ListGroup variant="flush">
         <ListGroup.Item className='d-flex justify-content-center'>Completed Meetings Count </ListGroup.Item>
-        <ListGroup.Item className='d-flex justify-content-center'>{courseMeeting?.length === 0 ? "Loading..." : completedCourseMeeting?.length}  </ListGroup.Item>
+        <ListGroup.Item className='d-flex justify-content-center'>{isLoading ? "Loading..." : completedCourseMeeting?.length}  </ListGroup.Item>
       </ListGroup>
     </Card>
     </Card>

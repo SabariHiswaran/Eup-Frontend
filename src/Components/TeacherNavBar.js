@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Button, Nav } from 'react-bootstrap';
+import { Button, Container, Nav } from 'react-bootstrap';
 
 import '../Components/TeacherNavBar.css'
 import { Link, useNavigate } from 'react-router-dom';
@@ -23,8 +23,8 @@ const TeacherNavBar = () => {
     setTeacherRole(true)
   }
   return (
-    <>
-    <Nav className="justify-content-center" activeKey="/home">
+    <Container className='p-3'>
+    <Nav fill variant='tabs' className="justify-content-center" activeKey="/home">
 
         <Nav.Item>
           <Nav.Link as={Link} to="/api/teacher">Home</Nav.Link>
@@ -49,6 +49,10 @@ const TeacherNavBar = () => {
         <Nav.Item>
           <Nav.Link as={Link} to="/api/teacher/courses/badges">Badge</Nav.Link>
         </Nav.Item>
+
+        <Nav.Item>
+          <Nav.Link as={Link} to="/api/teacher/courses/profile">Profile</Nav.Link>
+        </Nav.Item>
         {
                 isLoggedIn && 
                 <Button 
@@ -65,7 +69,7 @@ const TeacherNavBar = () => {
       : 
       null 
     }
-      </>
+      </Container>
   )
 }
 

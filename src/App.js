@@ -31,6 +31,7 @@ import BadgePage from './Components/BadgePage';
 import StudentBadgePage from './Components/Student/StudentBadgePage';
 import StudentFeedbackPage from './Components/Student/StudentFeedbackPage';
 import MeetingFeedback from './Components/Student/MeetingFeedback';
+import CommonProfile from './Components/CommonProfile';
 
 
 
@@ -96,6 +97,10 @@ const teacherRouter = createBrowserRouter([
         {
           path: "/api/teacher/courses/badges",
           element : <BadgePage/>
+        },
+        {
+          path : "/api/teacher/courses/profile",
+          element : <CommonProfile/>
         }
       ],
     errorElement: <ErrorPage />
@@ -192,6 +197,15 @@ const teacherRouter = createBrowserRouter([
         element: <Homepage />
       }]
     },
+    {
+      path : "/api/student/courses/profile",
+      element: <Header/>,
+      children : [{
+        path : "/api/student/courses/profile",
+        element: <Homepage />
+      }]
+    },
+
 
 ])
 
@@ -260,6 +274,10 @@ const studentRouter = createBrowserRouter([
           {
             path: "/api/student/courses/feedback/:id/:meetingId/:feedbackNumber",
             element : <MeetingFeedback />
+          },
+          {
+            path : "/api/student/courses/profile",
+            element : <CommonProfile/>
           }
         
 
@@ -331,6 +349,18 @@ const studentRouter = createBrowserRouter([
     children: [
       {
         path: "/api/teacher/courses/upcomingMeetings/editMeeting/:meetingId",
+        element: <StudentHomepage />,
+      }
+    ]
+
+  },
+  {
+
+    path : "/api/teacher/courses/profile",
+    element: <Header />,
+    children: [
+      {
+        path : "/api/teacher/courses/profile",
         element: <StudentHomepage />,
       }
     ]
